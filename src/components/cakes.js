@@ -4,7 +4,7 @@ export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
 
   return (
-    <div className="bg-menuNavBar h-screen">
+    <div id="cakes" className="bg-menuNavBar h-screen">
       {/* <!--NavBar--> */}
       <nav className="p-2">
         <div className="bg-navBarColor">

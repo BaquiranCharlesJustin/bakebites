@@ -23,19 +23,19 @@ export default function homepage() {
             {/* <!--Menu Items--> */}
             <div className="flex items-center gap-6">
               <a
-                href="#"
+                href="#about"
                 className="rounded-md text-xl font-bold text-darkBlue bg-aboutUs"
               >
                 About
               </a>
               <a
-                href="#"
+                href="#menu"
                 className="rounded-md text-xl font-bold text-darkBlue bg-aboutUs"
               >
                 Menu
               </a>
               <a
-                href="#"
+                href="#location"
                 className="rounded-md text-xl font-bold text-darkBlue bg-aboutUs"
               >
                 Location

@@ -1,6 +1,6 @@
 export default function aboutUs() {
   return (
-    <div className="bg-aboutUs h-screen">
+    <div id="about" className="bg-aboutUs h-screen">
       <nav className="p-3"></nav>
 
       <div className="bg-pageBG bg-white h-5/6 flex">

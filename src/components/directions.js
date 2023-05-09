@@ -1,6 +1,6 @@
 export default function directions() {
   return (
-    <div className="bg-aboutUs h-screen">
+    <div id="location" className="bg-aboutUs h-screen">
       <nav className="p-3"></nav>
 
       <div className="bg-pageBG bg-white h-5/6 flex">
@@ -36,17 +36,17 @@ export default function directions() {
             </a>
           </div>
           {/* <!-- MENU --> */}
-          <div>
+          <div id="menu">
             <h1 className="font-bold text-center text-6xl text-slate-900">MENU</h1>
             {/* <!-- Menu Buttons --> */}
             <div className="flex items-center">
-              <a className="flex justify-center" href="">
+              <a className="flex justify-center" href="#cakes">
                 <img className="" src="/images/Cakes.png" />
               </a>
-              <a className="flex justify-center" href="">
+              <a className="flex justify-center" href="#cakes">
                 <img className="" src="/images/Cupcakes.png" />
               </a>
-              <a className="flex justify-center" href="">
+              <a className="flex justify-center" href="#cakes">
                 <img className="" src="/images/Bakery.png" />
               </a>
             </div>
