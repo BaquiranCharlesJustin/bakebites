@@ -5,7 +5,6 @@ import Homepage from "../components/homepage";
 import AboutUs from "../components/about-us";
 import Directions from "../components/directions";
 import Cakes from "../components/cakes";
-import Modal from "../components/modal";
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
       <AboutUs></AboutUs>
       <Directions></Directions>
       <Cakes></Cakes>
-      <Modal></Modal>
     </Format>
   )
 }
