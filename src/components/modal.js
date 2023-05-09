@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function MyModal() {
+export default function modal({ visible }) {
+    if (!visible) return null;
+    const [ showModal, setShowmodal ] = useState(false)
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-      <div id="Popup" className="bg-aboutUs h-screen">
+    <div id="Modal" className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+      <div id="Modal" className="bg-aboutUs h-screen">
         <nav className="p-3"></nav>
         <div className="bg-pageBG bg-gray-500 h-5/6 flex justify-center items-center">
           <div className="card w-[450px] h-[450px] bg-pageBG bg-aboutUs border-4 border-navBarColor p-4 rounded-xl shadow-xl flex flex-col justify-between ">
@@ -61,6 +63,7 @@ export default function MyModal() {
         </div>
         <nav className="p-3"></nav>
       </div>
+      <modal visible ={showModal}/>
     </div>
   );
 }
