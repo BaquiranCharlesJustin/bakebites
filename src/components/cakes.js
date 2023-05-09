@@ -70,7 +70,7 @@ function Cake({ data }) {
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
         <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
-        <a href="">
+        <a href="#Modal">
           <img class="p-3 px-6 pt-2" src="/images/biteme.png" />
         </a>
       </div>

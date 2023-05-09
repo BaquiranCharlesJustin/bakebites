@@ -19,7 +19,8 @@ module.exports = {
         orderNowText:'#231F20',
         hoursLocation:'#D55F5B',
         aboutUs:'#D55F5B',
-        menuNavBar:'#E89C92'
+        menuNavBar:'#E89C92',
+        button1:'#F3E3E3',
       },
     },
     backgroundImage:{
