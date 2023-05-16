@@ -13,7 +13,13 @@ export default function cakes() {
       {router.query.posts && (
         <PostModal
           onClose={() => {
-            router.push("/#cakes");
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
           }}
         >
           <Posts postId={router.query.posts}></Posts>
@@ -84,7 +90,7 @@ function Cake({ data }) {
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
         <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
-        <Link onClick={() => router.push({ scroll: false })} href={`/?posts=${id}`}>
+        <Link scroll={false} href={`/?posts=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
       </div>
