@@ -6,6 +6,8 @@ import AboutUs from "../components/about-us";
 import Directions from "../components/directions";
 import Cakes from "../components/cakes";
 import Cartpage from "../components/cartpage";
+import Posts from "../components/posts"
+
 export default function Home() {
   return (
     <Format>
@@ -14,6 +16,7 @@ export default function Home() {
       <Directions></Directions>
       <Cakes></Cakes>
       <Cartpage></Cartpage>
+      <Posts></Posts>
     </Format>
   )
 }
