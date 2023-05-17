@@ -1,13 +1,13 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import Posts from "../components/posts";
+import Posts from "./posts";
 import PostModal from "./postModal";
 import { useRouter } from "next/router";
 
 export default function cakes() {
-  const { data, isLoading, isError } = fetcher("api/cakes");
+  const { data, isLoading, isError } = fetcher("api/posts");
   let router = useRouter();
-  console.log(router);
+  console.log(router)
   return (
     <div id="cakes" className="bg-menuNavBar h-screen">
       {router.query.posts && (
@@ -78,18 +78,17 @@ export default function cakes() {
 }
 
 function Cake({ data }) {
-  const { id, name, img } = data;
-  let router = useRouter();
+  const { id, title } = data;
 
   return (
     <div class="flex flex-row">
       <img
         class="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
-        src={img || "/"}
+        src={`/images/cake${id}.jpg`}
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
+        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
         <Link scroll={false} href={`/?posts=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>

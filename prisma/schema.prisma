@@ -13,3 +13,9 @@ model Post {
   content   String?
   published Boolean @default(false)
 }
+
+model Cart {
+  id Int @id @default(autoincrement())
+  userSession Int
+  postId Int
+}
