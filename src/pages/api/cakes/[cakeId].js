@@ -1,12 +1,13 @@
-import data from '../data'
+import prisma from "../../../lib/prisma";
 
-export default function handler(req, res) {
-    const { cakeId } = req.query;
-    const { Cakes } = data;
+export default async function handler(req, res) {
+  const { cakeId } = req.query;
+  const cakeById = await prisma.post.findUnique({
+    where: {
+      id: parseInt(cakeId),
+    },
+  });
 
-    if(cakeId){
-        const cake = Cakes.find( value => value.id == cakeId)
-        return res.status(200).json(cake)
-    }
-    return res.status(400).json({error: "Post Not Found"})
+  if (cakeById) return res.status(200).json(cakeById);
+  return res.status(404).json({ error: "Data Not Found" });
 }

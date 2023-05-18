@@ -1,17 +1,17 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import Posts from "./posts";
-import PostModal from "./postModal";
+import CakeModal from "./cake-modal";
+import Modal from "./modal";
 import { useRouter } from "next/router";
 
 export default function cakes() {
-  const { data, isLoading, isError } = fetcher("api/posts");
+  const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
   console.log(router)
   return (
     <div id="cakes" className="bg-menuNavBar h-screen">
-      {router.query.posts && (
-        <PostModal
+      {router.query.cakes && (
+        <Modal
           onClose={() => {
             router.push(
               {
@@ -22,8 +22,8 @@ export default function cakes() {
             );
           }}
         >
-          <Posts postId={router.query.posts}></Posts>
-        </PostModal>
+          <CakeModal cakeId={router.query.cakes}></CakeModal>
+        </Modal>
       )}
       {/* <!--NavBar--> */}
       <nav className="p-2">
@@ -89,7 +89,7 @@ function Cake({ data }) {
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
         <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
-        <Link scroll={false} href={`/?posts=${id}`}>
+        <Link scroll={false} href={`/?cakes=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
       </div>

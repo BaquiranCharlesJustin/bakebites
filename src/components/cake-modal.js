@@ -1,8 +1,8 @@
 import fetcher from "../lib/fetcher";
 import { useState } from "react";
 
-export default function cakes({ postId }) {
-  const { data, isLoading, isError } = fetcher(`api/posts/${postId}`);
+export default function CakeModal({ cakeId }) {
+  const { data, isLoading, isError } = fetcher(`api/cakes/${cakeId}`);
   return (
     <>
       <Modal {...data}></Modal>
@@ -33,12 +33,10 @@ function Modal({ id, title }) {
       <div className="card-body">
         <div className="card-actions grid grid-cols-2 gap-2">
           {/* <!-- Add to Cart Button --> */}
-          <div className="bg-menuNavBar rounded-full px-2 gap-6">
-            <button className="flex btn btn-primary text-center text-lg pl-3">
-              <img className="w-6 h-6" src="/images/cart.png" />
-              Add to Cart
-            </button>
-          </div>
+          <button className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3">
+            <img className="w-6 h-6" src="/images/cart.png" />
+            Add to Cart
+          </button>
           <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
             Buy now
           </button>
