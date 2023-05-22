@@ -20,6 +20,11 @@ module.exports = {
         menuNavBar: "#E89C92",
         button1: "#F3E3E3",
       },
+
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        bebasNeue: ['Bebas Neue', 'sans-serif'],
+      },
     },
     backgroundImage: {
       menu: "url('/images/wave-haikei.svg')",

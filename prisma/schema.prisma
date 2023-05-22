@@ -19,3 +19,5 @@ model Cart {
   userSession Int
   postId Int
 }
+
+// hanapin mo pano mag stistick yung url saka mag dadagdag ng panibagong variable (e.g /?post=1&user=1) 
