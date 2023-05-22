@@ -1,7 +1,7 @@
 export default function thankyou() {
     return (
       <div id="location" className="bg-aboutUs h-screen">
-        <nav className="p-3 flex justify-center font-bebasNeue font-bold">Ibayo, Pinaod, San Ildefonso, Bulacan, Philippines | marianoimee4@gmail.com | +63 912 686 1945</nav>
+        <nav className="p-3 flex justify-center font-description text-5xl ">Ibayo, Pinaod, San Ildefonso, Bulacan, Philippines | marianoimee4@gmail.com | +63 912 686 1945</nav>
   
         <div className="bg-pageBG bg-white h-5/6 flex">
           <div className="flex justify-start items-center container mx-auto p-2 flex-col">

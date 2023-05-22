@@ -22,8 +22,11 @@ module.exports = {
       },
 
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
-        bebasNeue: ['Bebas Neue', 'sans-serif'],
+        poppins: "'Poppins', sans-serif",
+        bebasNeue: "'Bebas Neue', sans-serif",
+        subject: "'Mulish', sans-serif",
+        subtitle: "'Cormorant', serif",
+        description: "'Forum', cursive",
       },
     },
     backgroundImage: {
