@@ -4,12 +4,12 @@ import CakeModal from "./cake-modal";
 import Modal from "./modal";
 import { useRouter } from "next/router";
 
-export default function cakes() {
+export default function cupcake() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
   console.log(router)
   return (
-    <div id="cakes" className="bg-menuNavBar">
+    <div id="cupcake" className="">
       {router.query.cakes && (
         <Modal
           onClose={() => {
@@ -26,7 +26,7 @@ export default function cakes() {
         </Modal>
       )}
       {/* <!--NavBar--> */}
-      <nav className="p-2">
+      <nav className="">
         <div className="bg-navBarColor">
           {/* <!--Search,Cart,Message--> */}
           <div className="flex justify-between mx-auto">
@@ -43,9 +43,9 @@ export default function cakes() {
               </div>
             </div>
 
-            {/* <!--Title Cakes--> */}
+            {/* <!--Title CupCakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="font-bold text-5xl">CAKES</p>
+              <p className="font-bold text-5xl">CUP CAKES</p>
               <div>
                 <p className="italic text-2xl">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
@@ -84,7 +84,7 @@ function Cake({ data }) {
     <div class="flex flex-row">
       <img
         class="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
-        src={`/images/cake${id}.jpg`}
+        src={`/images/cupcake${id}.jpg`}
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">

@@ -10,11 +10,11 @@ export default function directions() {
             {/* <!-- inside border with content --> */}
             <div className="bg-hoursLocation/80 border-2 border-slate-950 p-6 flex flex-col">
               <div className="h-72 w-full">
-                <h1 className="font-bold text-center text-3xl">HOURS & LOCATION</h1>
-                <h2 className="font-bold text-center text-2xl p-2">
+                <h1 className="font-bold text-center text-5xl">HOURS & LOCATION</h1>
+                <h2 className="font-bold text-center text-xl p-2">
                   Ibayo, Pinaod, San Ildefonso, Bulacan, Philippines
                 </h2>
-                <h3 className="font-bold text-center text-1xl p-2">
+                <h3 className="font-bold text-center text-xl p-2">
                   marianoimee4@gmail.com
                 </h3>
                 <h4 className="font-bold text-center text-xl p-2">
@@ -43,10 +43,10 @@ export default function directions() {
               <a className="flex justify-center" href="#cakes">
                 <img className="" src="/images/Cakes.png" />
               </a>
-              <a className="flex justify-center" href="#cakes">
+              <a className="flex justify-center" href="#cupcake">
                 <img className="" src="/images/Cupcakes.png" />
               </a>
-              <a className="flex justify-center" href="#cakes">
+              <a className="flex justify-center" href="#bakery">
                 <img className="" src="/images/Bakery.png" />
               </a>
             </div>

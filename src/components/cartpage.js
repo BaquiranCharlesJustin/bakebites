@@ -1,11 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+
 
 export default function cartpage() {
   return (
     <div id="cartpage" className="space-y-4 p-6">
       <div className="bg-menuNavBar border-4 border-aboutUs flex justify-center items-center space-x-4">
-        <h1>your</h1>
+        <h1 className="font-bold text-5xl">YOUR</h1>
         <Image
           src={"/images/BakeBitesLogo.png"}
           width={150}
@@ -13,7 +15,7 @@ export default function cartpage() {
           fill={false}
           className="rounded-full"
         />
-        <h1>cake</h1>
+        <h1 className="font-bold text-5xl">CAKE</h1>
       </div>
 
       <div className="bg-menuNavBar border-4 border-aboutUs">
@@ -34,13 +36,14 @@ export default function cartpage() {
             <p>CakeName</p>
           </div>
           <div className="space-y-4">
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl">
               Size:{" "}
             </div>
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4">
-              Amount
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl">
+              Amount: 
+              <Counter />
             </div>
-            <Counter />
+            
           </div>
         </div>
       </div>
@@ -52,12 +55,12 @@ export default function cartpage() {
               checked="checked"
               class="checkbox checkbox-lg"
             />
-            <p>All</p>
+            <p className="text-3xl">All</p>
           </div>
-          <p>Total: Amount</p>
+          <p className="text-3xl">Total: Amount</p>
         </div>
-        <div className="hover:bg-red-600 bg-menuNavBar border-2 border-black py-2 px-4 flex justify-between">
-          Checkout
+        <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-3xl">
+          <Link href="#orderConfirm">Checkout</Link>
         </div>
       </div>
     </div>
@@ -83,7 +86,7 @@ function Counter() {
           for="custom-input-number"
           className="w-full text-gray-700 text-sm font-semibold"
         >
-          Counter Input
+          
         </label>
         <div className="rounded-lg flex">
           <CounterBtn label={"-"} onClick={dec} />
