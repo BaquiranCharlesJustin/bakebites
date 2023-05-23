@@ -35,10 +35,7 @@ export default function cakes() {
 
               <div className="flex h-36 w-36 gap-6 items-center">
                 <a href="">
-                  <img className="" src="/images/cart.png" />
-                </a>
-                <a href="">
-                  <img className="" src="/images/message.png" />
+                  <img className="#cartpage" src="/images/cart.png" />
                 </a>
               </div>
             </div>

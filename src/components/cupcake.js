@@ -34,11 +34,8 @@ export default function cupcake() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="">
+                <a href="#cartpage">
                   <img className="" src="/images/cart.png" />
-                </a>
-                <a href="">
-                  <img className="" src="/images/message.png" />
                 </a>
               </div>
             </div>
