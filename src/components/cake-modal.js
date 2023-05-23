@@ -1,3 +1,4 @@
+import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import { useState } from "react";
 
@@ -10,45 +11,24 @@ export default function CakeModal({ cakeId }) {
   );
 }
 
-function Modal({ id, title }) {
-  return (
-    <>
-      <div className="flex flex-row rounded-xl ">
-        <img
-          className="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
-          src={`/images/cake${id}.jpg`}
-          alt=""
-        />
-        <div className="font-bold flex flex-col items-center justify-center pl-3">
-          <p>{title || "Unknown"}</p>
-          <p>Available Size:</p>
-          <p className="bg-slate-800 rounded-full px-2 text-orange-300">
-            6 Inches
-          </p>
-          <div className="flex flex-row">
-            <Counter></Counter>
-          </div>
-        </div>
-      </div>
-      <div className="card-body">
-        <div className="card-actions grid grid-cols-2 gap-2">
-          {/* <!-- Add to Cart Button --> */}
-          <button className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3">
-            <img className="w-6 h-6" src="/images/cart.png" />
-            Add to Cart
-          </button>
-          <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
-            Buy now
-          </button>
-        </div>
-      </div>
-    </>
-  );
-}
+function Modal({ id, name, size }) {
+  const [count, setCount] = useState(1);
+  const productType = "cake"
+  const submitData = async (e) => {
+    e.preventDefault();
+    try {
+      const userSession = sessionStorage.getItem("state");
+      const body = { id, productType, count, userSession };
 
-function Counter() {
-  const [count, setCount] = useState(0);
-
+      await fetch(`api/add_cart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const inc = (event) => {
     console.log("btn", event.target);
     setCount(count + 1);
@@ -58,6 +38,46 @@ function Counter() {
     setCount(count - 1);
   };
 
+  return (
+    <>
+      <div className="flex flex-row rounded-xl p-67">
+        <img
+          className="h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
+          src={`/images/cake${id}.jpg`}
+          alt=""
+        />
+        <div className="font-bold flex flex-col items-center justify-center pl-3">
+          <p>{name || "Unknown"}</p>
+          <p>Available Size:</p>
+          <p className="bg-slate-800 rounded-full px-2 text-orange-300">
+            {size || "Unknown"}
+          </p>
+          <div className="flex flex-row">
+            <Counter count={count} inc={inc} dec={dec}></Counter>
+          </div>
+        </div>
+      </div>
+      <div className="card-body">
+        <div className="card-actions grid grid-cols-2 gap-2">
+          {/* <!-- Add to Cart Button --> */}
+          <Link
+            href="/?api/add_cart"
+            onClick={submitData}
+            className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3"
+          >
+            <img className="w-6 h-6" src="/images/cart.png" />
+            Add to Cart
+          </Link>
+          <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
+            Buy now
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Counter({ count, inc, dec }) {
   return (
     <>
       <div className="custom-number-input h-10 w-32">
@@ -86,7 +106,6 @@ const CounterBtn = ({ label, onClick }) => {
     </div>
   );
 };
-
 const CounterDisplay = ({ count }) => {
   return <div className="py-2 px-4">{count}</div>;
 };

@@ -1,13 +1,17 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import CakeModal from "./cake-modal";
-import Modal from "./modal";
+import Modal from "./ProductModal";
+import Cart from "../pages/cart";
+import Order from "../pages/order";
+
 import { useRouter } from "next/router";
 
 export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
-  console.log(router)
+  console.log(router);
+
   return (
     <div id="cakes" className="bg-menuNavBar">
       {router.query.cakes && (
@@ -25,6 +29,36 @@ export default function cakes() {
           <CakeModal cakeId={router.query.cakes}></CakeModal>
         </Modal>
       )}
+      {router.query.cart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Cart></Cart>
+        </Modal>
+      )}
+      {router.query.order && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Order></Order>
+        </Modal>
+      )}
       {/* <!--NavBar--> */}
       <nav className="p-2">
         <div className="bg-navBarColor">
@@ -34,18 +68,20 @@ export default function cakes() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="">
+                <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
-                <a href="">
+                </Link>
+                <Link scroll={false} href="/?order=1">
                   <img className="" src="/images/message.png" />
-                </a>
+                </Link>
               </div>
             </div>
 
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="text-6xl font-bebasNeue tracking-widest text-weirdPinkColor text-outline">CAKES</p>
+              <p className="text-6xl font-bebasNeue tracking-widest text-weirdPinkColor text-outline">
+                CAKES
+              </p>
               <div>
                 <p className="italic text-2xl text-outline font-poppins">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
@@ -78,7 +114,7 @@ export default function cakes() {
 }
 
 function Cake({ data }) {
-  const { id, title } = data;
+  const { id, name } = data;
 
   return (
     <div class="flex flex-row">
@@ -88,7 +124,7 @@ function Cake({ data }) {
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
+        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
         <Link scroll={false} href={`/?cakes=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>

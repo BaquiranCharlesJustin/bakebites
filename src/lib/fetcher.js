@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
-const baseURL = "https://bakebites.vercel.app/";
-// const baseURL = "http://localhost:3000/";
+// const baseURL = "https://bakebites.vercel.app/";
+const baseURL = "http://localhost:3000/";
 const response = (...args) => fetch(...args).then((res) => res.json());
 
 export default function fetcher(endpoint) {
