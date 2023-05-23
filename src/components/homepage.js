@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function homepage() {
   return (
-    <div id="homepage" className="bg-aboutUs h-screen ">
+    <div id="homepage" className="bg-aboutUs h-screen">
       {/* <!--NavBar--> */}
       <div className="h-5/6">
         <nav className="p-6">

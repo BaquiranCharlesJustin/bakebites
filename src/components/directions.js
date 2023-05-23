@@ -1,7 +1,6 @@
 export default function directions() {
   return (
     <div id="location" className="bg-aboutUs h-screen">
-      <nav className="p-3"></nav>
 
       <div className="bg-pageBG bg-white/90 h-5/6 flex">
         <div className="flex justify-start items-center container mx-auto p-2 flex-col">
@@ -56,7 +55,6 @@ export default function directions() {
           </div>
         </div>
       </div>
-      <nav className="p-3"></nav>
     </div>
   );
 }
