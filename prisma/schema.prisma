@@ -7,17 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
+model Cake {
+  id   Int    @id @default(autoincrement())
+  name String
+  size String
+}
+
+model Cupcake {
+  id   Int    @id @default(autoincrement())
+  name String
+  size String
+}
+
+model Bakery {
+  id   Int    @id @default(autoincrement())
+  name String
+  size String
 }
 
 model Cart {
-  id Int @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
   userSession Int
-  postId Int
+  productId   Int
+  amount      Int
 }
 
 // hanapin mo pano mag stistick yung url saka mag dadagdag ng panibagong variable (e.g /?post=1&user=1) 

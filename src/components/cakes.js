@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
-  console.log(router)
+  console.log(router);
+
   return (
     <div id="cakes" className="bg-menuNavBar">
       {router.query.cakes && (
@@ -45,7 +46,9 @@ export default function cakes() {
 
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="text-6xl font-bebasNeue tracking-widest text-weirdPinkColor text-outline">CAKES</p>
+              <p className="text-6xl font-bebasNeue tracking-widest text-weirdPinkColor text-outline">
+                CAKES
+              </p>
               <div>
                 <p className="italic text-2xl text-outline font-poppins">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
