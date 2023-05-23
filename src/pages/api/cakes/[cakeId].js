@@ -2,7 +2,7 @@ import prisma from "../../../lib/prisma";
 
 export default async function handler(req, res) {
   const { cakeId } = req.query;
-  const cakeById = await prisma.post.findUnique({
+  const cakeById = await prisma.cake.findUnique({
     where: {
       id: parseInt(cakeId),
     },

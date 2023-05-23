@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
-  console.log(router);
 
   return (
     <div id="cakes" className="bg-menuNavBar">
@@ -81,7 +80,7 @@ export default function cakes() {
 }
 
 function Cake({ data }) {
-  const { id, title } = data;
+  const { id, name } = data;
 
   return (
     <div class="flex flex-row">
@@ -91,7 +90,7 @@ function Cake({ data }) {
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
+        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
         <Link scroll={false} href={`/?cakes=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
