@@ -5,7 +5,7 @@ export default function thankyou() {
       <div id="thankyou" className="bg-aboutUs h-screen">
         <nav className="p-3 flex justify-center font-description text-5xl ">Ibayo, Pinaod, San Ildefonso, Bulacan, Philippines | marianoimee4@gmail.com | +63 912 686 1945</nav>
   
-        <div className="bg-pageBG bg-white h-5/6 flex justify-center">
+        <div className="bg-pageBG bg-white/90 h-5/6 flex justify-center">
           <div className="flex justify-center p-2 flex-col">
             {/* <!-- labas na border --> */}
             <div className="border-4 border-slate-950 p-2">

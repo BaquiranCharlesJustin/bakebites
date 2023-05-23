@@ -5,7 +5,7 @@ export default function directions() {
     <div id="orderConfirm" className="bg-aboutUs h-screen">
       <nav className="p-3"></nav>
 
-      <div className="bg-pageBG bg-white h-5/6 flex justify-center">
+      <div className="bg-pageBG bg-white/90 h-5/6 flex justify-center">
         <div className="flex justify-center p-2 flex-col">
           {/* <!-- labas na border --> */}
           <div className="border-4 border-menuNavBar p-2 ">
@@ -53,7 +53,7 @@ export default function directions() {
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>       
                 </form>
                 <div className="py-3 flex items-center justify-center">
-                  <div className="card bg-base-300 rounded-full place-items-center w-24 ">
+                  <div className="card bg-base-300 rounded-full place-items-center w-24 hover:bg-lime-300 ">
                     <Link href ="#thankyou">Confirm</Link>
                   </div>
                 </div>

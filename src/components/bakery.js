@@ -56,7 +56,7 @@ export default function bakery() {
             {/* <!--Logo--> */}
             <div className="order-3 pr-3">
               <img
-                className="h-36 w-36 rounded-full bg-white flex justify-center items-center"
+                className="h-36 w-36 rounded-full bg-white/90 flex justify-center items-center"
                 src="/images/BakeBitesLogo.png"
                 alt=""
               />

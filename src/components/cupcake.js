@@ -65,7 +65,7 @@ export default function cupcake() {
         </div>
       </nav>
       {/* <!-- Landing Body Page --> */}
-      <div className="bg-white bg-pageBG bg-repeat p-6">
+      <div className="bg-white/90 bg-pageBG bg-repeat p-6">
         <div className="grid grid-cols-3 place-content-evenly gap-5 ">
           {/* <!-- CarrotCake --> */}
           {data?.map((value, index) => (

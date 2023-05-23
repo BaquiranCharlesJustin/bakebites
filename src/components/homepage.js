@@ -19,13 +19,13 @@ export default function homepage() {
 
               {/* <!--Title--> */}
               <div className="flex flex-col justify-center text-center gap-2">
-                <h1 className="text-5xl font-bold">GOODNESS BAKED IN.</h1>
+                <h1 className="text-5xl font-bold font-bebasNeue">GOODNESS BAKED IN.</h1>
                 <h2>Ibayo, Pinaod, San Ildelfonso, Bulacan, Philippines</h2>
               </div>
 
               {/* <!--Menu Items--> */}
               <div className="flex justify-center items-center gap-6">
-                <p className="flex rounded-full text-xl font-bold text-darkBlue bg-aboutUs hover:bg-white p-2"><Link href ="#about">About</Link></p>
+                <p className="flex rounded-full text-xl font-bold text-darkBlue bg-aboutUs hover:bg-white p-2"><Link href ="#location">Menu</Link></p>
                 <p className="flex rounded-full text-xl font-bold text-darkBlue bg-aboutUs hover:bg-white p-2"><Link href ="#location">Location</Link></p>
               </div>
             </div>
@@ -33,7 +33,7 @@ export default function homepage() {
         </nav>
 
         {/* <!-- Landing Body Page --> */}
-        <div className="bg-white bg-pageBG bg-repeat py-36 ">
+        <div className="bg-white/90 bg-pageBG bg-repeat py-36 ">
           <div className="bg-no-repeat bg-center bg-landingBG  ">
           <div className="flex items-center container mx-auto gap-10 p-3 justify-between rounded-full">
             <img
