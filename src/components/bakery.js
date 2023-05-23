@@ -2,12 +2,14 @@ import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import BakeryModal from "./bakery-modal";
 import Modal from "./ProductModal";
+import Cart from "../pages/cart";
+import Order from "../pages/order";
 import { useRouter } from "next/router";
 
 export default function bakery() {
   const { data, isLoading, isError } = fetcher("api/bakery");
   let router = useRouter();
-  console.log(router)
+  console.log(router);
   return (
     <div id="bakery" className="">
       {router.query.bakery && (
@@ -25,6 +27,36 @@ export default function bakery() {
           <BakeryModal bakeryId={router.query.bakery}></BakeryModal>
         </Modal>
       )}
+      {router.query.cart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Cart></Cart>
+        </Modal>
+      )}
+       {router.query.order && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Order></Order>
+        </Modal>
+      )}
       {/* <!--NavBar--> */}
       <nav className="">
         <div className="bg-navBarColor">
@@ -34,18 +66,20 @@ export default function bakery() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="">
+                <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
-                <a href="">
+                </Link>
+                {/* <a href="">
                   <img className="" src="/images/message.png" />
-                </a>
+                </a> */}
               </div>
             </div>
 
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">BAKERY</p>
+              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">
+                BAKERY
+              </p>
               <div>
                 <p className="italic text-2xl font-poppins text-outline">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)

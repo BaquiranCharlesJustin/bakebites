@@ -3,6 +3,7 @@ import fetcher from "../lib/fetcher";
 import CupcakeModal from "./cupcake-modal";
 import Modal from "./ProductModal";
 import Cart from "../pages/cart";
+import Order from "../pages/order";
 import { useRouter } from "next/router";
 
 export default function cupcake() {
@@ -41,6 +42,21 @@ export default function cupcake() {
           <Cart></Cart>
         </Modal>
       )}
+       {router.query.order && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Order></Order>
+        </Modal>
+      )}
       {/* <!--NavBar--> */}
       <nav className="">
         <div className="bg-navBarColor">
@@ -53,9 +69,9 @@ export default function cupcake() {
                 <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
                 </Link>
-                <a href="">
+                {/* <a href="">
                   <img className="" src="/images/message.png" />
-                </a>
+                </a> */}
               </div>
             </div>
 

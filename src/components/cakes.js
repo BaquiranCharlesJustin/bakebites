@@ -3,6 +3,8 @@ import fetcher from "../lib/fetcher";
 import CakeModal from "./cake-modal";
 import Modal from "./ProductModal";
 import Cart from "../pages/cart";
+import Order from "../pages/order";
+
 import { useRouter } from "next/router";
 
 export default function cakes() {
@@ -42,6 +44,21 @@ export default function cakes() {
           <Cart></Cart>
         </Modal>
       )}
+      {router.query.order && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Order></Order>
+        </Modal>
+      )}
       {/* <!--NavBar--> */}
       <nav className="p-2">
         <div className="bg-navBarColor">
@@ -54,9 +71,9 @@ export default function cakes() {
                 <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
                 </Link>
-                <a href="">
+                <Link scroll={false} href="/?order=1">
                   <img className="" src="/images/message.png" />
-                </a>
+                </Link>
               </div>
             </div>
 

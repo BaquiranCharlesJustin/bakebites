@@ -1,3 +1,4 @@
+import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import { useState } from "react";
 
@@ -11,6 +12,31 @@ export default function CakeModal({ bakeryId }) {
 }
 
 function Modal({ id, name, size }) {
+  const [count, setCount] = useState(1);
+  const productType = "bakery";
+  const submitData = async (e) => {
+    e.preventDefault();
+    try {
+      const userSession = sessionStorage.getItem("state");
+      const body = { id, productType, count, userSession };
+
+      await fetch(`api/add_cart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const inc = (event) => {
+    console.log("btn", event.target);
+    setCount(count + 1);
+  };
+
+  const dec = () => {
+    setCount(count - 1);
+  };
   return (
     <>
       <div className="flex flex-row rounded-xl ">
@@ -26,17 +52,21 @@ function Modal({ id, name, size }) {
             {size}
           </p>
           <div className="flex flex-row">
-            <Counter></Counter>
+            <Counter count={count} inc={inc} dec={dec}></Counter>
           </div>
         </div>
       </div>
       <div className="card-body">
         <div className="card-actions grid grid-cols-2 gap-2">
           {/* <!-- Add to Cart Button --> */}
-          <button className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3">
+          <Link
+            href="/?api/add_cart"
+            onClick={submitData}
+            className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3"
+          >
             <img className="w-6 h-6" src="/images/cart.png" />
             Add to Cart
-          </button>
+          </Link>
           <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
             Buy now
           </button>
@@ -46,18 +76,7 @@ function Modal({ id, name, size }) {
   );
 }
 
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  const inc = (event) => {
-    console.log("btn", event.target);
-    setCount(count + 1);
-  };
-
-  const dec = () => {
-    setCount(count - 1);
-  };
-
+function Counter({ count, inc, dec }) {
   return (
     <>
       <div className="custom-number-input h-10 w-32">
