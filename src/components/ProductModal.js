@@ -39,7 +39,7 @@ export default function ProductModal({onClose = () => {}, children }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="card w-[450px] h-[450px] bg-pageBG bg-aboutUs border-4 border-navBarColor p-4 rounded-xl shadow-xl flex flex-col justify-between ">
+                <Dialog.Panel className="card w-auto h-auto bg-pageBG bg-aboutUs border-4 border-navBarColor p-4 rounded-xl shadow-xl flex flex-col justify-between ">
                   {children}
                 </Dialog.Panel>
               </Transition.Child>

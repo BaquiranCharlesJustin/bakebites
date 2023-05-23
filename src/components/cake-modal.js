@@ -40,9 +40,9 @@ function Modal({ id, name, size }) {
 
   return (
     <>
-      <div className="flex flex-row rounded-xl ">
+      <div className="flex flex-row rounded-xl p-67">
         <img
-          className="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
+          className="h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
           src={`/images/cake${id}.jpg`}
           alt=""
         />

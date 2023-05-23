@@ -1,15 +1,17 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import CakeModal from "./cake-modal";
-import Modal from "./modal";
+import CupcakeModal from "./cupcake-modal";
+import Modal from "./ProductModal";
+import Cart from "../pages/cart";
 import { useRouter } from "next/router";
 
 export default function cupcake() {
-  const { data, isLoading, isError } = fetcher("api/cakes");
+  const { data, isLoading, isError } = fetcher("api/cupcakes");
   let router = useRouter();
+  console.log(router)
   return (
     <div id="cupcake" className="">
-      {router.query.cakes && (
+      {router.query.cupcakes && (
         <Modal
           onClose={() => {
             router.push(
@@ -21,7 +23,22 @@ export default function cupcake() {
             );
           }}
         >
-          <CakeModal cakeId={router.query.cakes}></CakeModal>
+          <CupcakeModal cupcakeId={router.query.cupcakes}></CupcakeModal>
+        </Modal>
+      )}
+      {router.query.cart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Cart></Cart>
         </Modal>
       )}
       {/* <!--NavBar--> */}
@@ -33,9 +50,9 @@ export default function cupcake() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="">
+                <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
+                </Link>
                 <a href="">
                   <img className="" src="/images/message.png" />
                 </a>
@@ -77,18 +94,18 @@ export default function cupcake() {
 }
 
 function Cake({ data }) {
-  const { id, title } = data;
+  const { id, name } = data;
 
   return (
     <div class="flex flex-row">
       <img
         class="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
-        src={`/images/cupcake${id}.jpg`}
+        src={`/images/cupcakes${id}.jpg`}
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
-        <Link scroll={false} href={`/?cakes=${id}`}>
+        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
+        <Link scroll={false} href={`/?cupcakes=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
       </div>

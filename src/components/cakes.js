@@ -1,12 +1,14 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import CakeModal from "./cake-modal";
-import Modal from "./modal";
+import Modal from "./ProductModal";
+import Cart from "../pages/cart";
 import { useRouter } from "next/router";
 
 export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
+  console.log(router);
 
   return (
     <div id="cakes" className="bg-menuNavBar">
@@ -25,6 +27,21 @@ export default function cakes() {
           <CakeModal cakeId={router.query.cakes}></CakeModal>
         </Modal>
       )}
+      {router.query.cart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Cart></Cart>
+        </Modal>
+      )}
       {/* <!--NavBar--> */}
       <nav className="p-2">
         <div className="bg-navBarColor">
@@ -34,9 +51,9 @@ export default function cakes() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="">
+                <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
+                </Link>
                 <a href="">
                   <img className="" src="/images/message.png" />
                 </a>

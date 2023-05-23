@@ -26,8 +26,8 @@ model Bakery {
 }
 
 model Cart {
-  id          Int    @id @default(autoincrement())
-  userSession String
+  id          Int @id @default(autoincrement())
+  userSession Int
   productId   Int
   productType String
   amount      Int

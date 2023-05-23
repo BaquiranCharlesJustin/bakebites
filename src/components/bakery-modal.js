@@ -1,8 +1,8 @@
 import fetcher from "../lib/fetcher";
 import { useState } from "react";
 
-export default function CakeModal({ cakeId }) {
-  const { data, isLoading, isError } = fetcher(`api/cakes/${cakeId}`);
+export default function CakeModal({ bakeryId }) {
+  const { data, isLoading, isError } = fetcher(`api/bakery/${bakeryId}`);
   return (
     <>
       <Modal {...data}></Modal>
@@ -10,7 +10,7 @@ export default function CakeModal({ cakeId }) {
   );
 }
 
-function Modal({ id, title }) {
+function Modal({ id, name, size }) {
   return (
     <>
       <div className="flex flex-row rounded-xl ">
@@ -20,10 +20,10 @@ function Modal({ id, title }) {
           alt=""
         />
         <div className="font-bold flex flex-col items-center justify-center pl-3">
-          <p>{title || "Unknown"}</p>
+          <p>{name || "Unknown"}</p>
           <p>Available Size:</p>
           <p className="bg-slate-800 rounded-full px-2 text-orange-300">
-            6 Inches
+            {size}
           </p>
           <div className="flex flex-row">
             <Counter></Counter>

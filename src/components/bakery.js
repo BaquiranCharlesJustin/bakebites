@@ -1,16 +1,16 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import CakeModal from "./cake-modal";
-import Modal from "./modal";
+import BakeryModal from "./bakery-modal";
+import Modal from "./ProductModal";
 import { useRouter } from "next/router";
 
 export default function bakery() {
-  const { data, isLoading, isError } = fetcher("api/cakes");
+  const { data, isLoading, isError } = fetcher("api/bakery");
   let router = useRouter();
   console.log(router)
   return (
     <div id="bakery" className="">
-      {router.query.cakes && (
+      {router.query.bakery && (
         <Modal
           onClose={() => {
             router.push(
@@ -22,7 +22,7 @@ export default function bakery() {
             );
           }}
         >
-          <CakeModal cakeId={router.query.cakes}></CakeModal>
+          <BakeryModal bakeryId={router.query.bakery}></BakeryModal>
         </Modal>
       )}
       {/* <!--NavBar--> */}
@@ -78,7 +78,7 @@ export default function bakery() {
 }
 
 function Cake({ data }) {
-  const { id, title } = data;
+  const { id, name } = data;
 
   return (
     <div class="flex flex-row">
@@ -88,8 +88,8 @@ function Cake({ data }) {
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
-        <Link scroll={false} href={`/?cakes=${id}`}>
+        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
+        <Link scroll={false} href={`/?bakery=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
       </div>

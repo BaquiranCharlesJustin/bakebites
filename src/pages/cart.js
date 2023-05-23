@@ -1,13 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
+import fetcher from "../lib/fetcher";
+import cupcake from "@/components/cupcake";
 
 export default function cartpage() {
+  const { data, isLoading, isError } = fetcher("api/carts");
+
   return (
     <div id="cartpage" className="space-y-4 p-6">
       <div className="bg-menuNavBar border-4 border-aboutUs flex justify-center items-center space-x-4">
-        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">YOUR</h1>
+        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">
+          YOUR
+        </h1>
         <Image
           src={"/images/BakeBitesLogo.png"}
           width={150}
@@ -15,38 +20,15 @@ export default function cartpage() {
           fill={false}
           className="rounded-full"
         />
-        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">CAKE</h1>
+        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">
+          CAKE
+        </h1>
       </div>
 
-      <div className="bg-menuNavBar border-4 border-aboutUs">
-        <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
-          <div className="flex items-center gap-8">
-            <input
-              type="checkbox"
-              checked="checked"
-              class="checkbox checkbox-lg"
-            />
-            <Image
-              className="border-menuNavBar bg-menuNavBar rounded-full"
-              src={`/images/cake1.jpg`}
-              width={250}
-              height={100}
-              fill={false}
-            />
-            <p className="font-poppins text-xl font-bold">CakeName</p>
-          </div>
-          <div className="space-y-4">
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
-              Size:{" "}
-            </div>
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-              Amount: 
-              <Counter />
-            </div>
-            
-          </div>
-        </div>
-      </div>
+      {data?.map((value, index) => (
+        <Cart data1={value} key={index}></Cart>
+      ))}
+
       <div className="bg-menuNavBar border-4 border-aboutUs p-1 flex">
         <div className="bg-menuNavBar border-2 border-black py-2 px-4 flex justify-between grow">
           <div className="flex">
@@ -67,47 +49,53 @@ export default function cartpage() {
   );
 }
 
-function Counter() {
-  const [count, setCount] = useState(0);
+function Cart({ data1 }) {
+  const { id, userSession, productId, amount, productType } = data1;
+  const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
+  // const { cupcakeData, isLoading1, isError1 } = fetcher(`api/cupcakes/${productId}`);
 
-  const inc = (event) => {
-    console.log("btn", event.target);
-    setCount(count + 1);
-  };
+  if (isError && isError1) return <div>failed to load</div>;
+  // if (!cakeData && !cupcakeData) return <div>loading...</div>;
 
-  const dec = () => {
-    setCount(count - 1);
-  };
+  // if(cakeData.name === productType){
+  //   data = cakeData
+  // }
+  // if(cupcakeData.name === productType){
+  //   data = cupcakeData
+  // }
+  if (sessionStorage.getItem("state") != userSession) {
+    return;
+  }
 
   return (
     <>
-      <div className="custom-number-input h-10 w-32">
-        <label
-          for="custom-input-number"
-          className="w-full text-gray-700 text-sm font-semibold"
-        >
-          
-        </label>
-        <div className="rounded-lg flex">
-          <CounterBtn label={"-"} onClick={dec} />
-          <CounterDisplay count={count} />
-          <CounterBtn label={"+"} onClick={inc} />
+      <div className="bg-menuNavBar border-4 border-aboutUs">
+        <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
+          <div className="flex items-center gap-8">
+            <input
+              type="checkbox"
+              checked="checked"
+              class="checkbox checkbox-lg"
+            />
+            <Image
+              className="border-menuNavBar bg-menuNavBar rounded-full"
+              src={`/images/cake${data.id}.jpg`}
+              width={250}
+              height={100}
+              fill={false}
+            />
+            <p className="font-poppins text-xl font-bold">{data.name}</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
+              Size: {data.size}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Amount: {amount}
+            </div>
+          </div>
         </div>
       </div>
     </>
   );
 }
-const CounterBtn = ({ label, onClick }) => {
-  return (
-    <div
-      className="counter-btn bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 py-2 px-4 rounded-md cursor-pointer outline-none"
-      onClick={onClick}
-    >
-      {label}
-    </div>
-  );
-};
-
-const CounterDisplay = ({ count }) => {
-  return <div className="py-2 px-4">{count}</div>;
-};
