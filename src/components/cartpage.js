@@ -7,7 +7,7 @@ export default function cartpage() {
   return (
     <div id="cartpage" className="space-y-4 p-6">
       <div className="bg-menuNavBar border-4 border-aboutUs flex justify-center items-center space-x-4">
-        <h1 className="font-bold text-5xl">YOUR</h1>
+        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">YOUR</h1>
         <Image
           src={"/images/BakeBitesLogo.png"}
           width={150}
@@ -15,7 +15,7 @@ export default function cartpage() {
           fill={false}
           className="rounded-full"
         />
-        <h1 className="font-bold text-5xl">CAKE</h1>
+        <h1 className="font-bebasNeue tracking-widest text-outline text-white text-5xl">CAKE</h1>
       </div>
 
       <div className="bg-menuNavBar border-4 border-aboutUs">
@@ -33,13 +33,13 @@ export default function cartpage() {
               height={100}
               fill={false}
             />
-            <p>CakeName</p>
+            <p className="font-poppins text-xl font-bold">CakeName</p>
           </div>
           <div className="space-y-4">
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
               Size:{" "}
             </div>
-            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
               Amount: 
               <Counter />
             </div>
@@ -55,11 +55,11 @@ export default function cartpage() {
               checked="checked"
               class="checkbox checkbox-lg"
             />
-            <p className="text-3xl">All</p>
+            <p className="text-3xl font-poppins text-outline">All</p>
           </div>
-          <p className="text-3xl">Total: Amount</p>
+          <p className="text-3xl font-poppins text-outline">Total: Amount</p>
         </div>
-        <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-3xl">
+        <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
           <Link href="#orderConfirm">Checkout</Link>
         </div>
       </div>

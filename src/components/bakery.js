@@ -45,9 +45,9 @@ export default function bakery() {
 
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="font-bold text-5xl">BAKERY</p>
+              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">BAKERY</p>
               <div>
-                <p className="italic text-2xl">
+                <p className="italic text-2xl font-poppins text-outline">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
                 </p>
               </div>

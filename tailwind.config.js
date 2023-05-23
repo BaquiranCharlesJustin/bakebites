@@ -19,14 +19,7 @@ module.exports = {
         aboutUs: "#D55F5B",
         menuNavBar: "#E89C92",
         button1: "#F3E3E3",
-      },
-
-      fontFamily: {
-        poppins: "'Poppins', sans-serif",
-        bebasNeue: "'Bebas Neue', sans-serif",
-        subject: "'Mulish', sans-serif",
-        subtitle: "'Cormorant', serif",
-        description: "'Forum', cursive",
+        weirdPinkColor: "#B86280",
       },
     },
     backgroundImage: {
@@ -48,11 +41,28 @@ module.exports = {
       cake4: "url('/images/cake4.png')",
       biteme: "url('/images/biteme.png')",
     },
+
+    fontFamily: {
+      poppins: ['var(--font-poppins)'],
+      bebasNeue: ['var(--font-bebas-neue)'],
+    },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.text-outline': {
+          textShadow: 
+            '0.5px 0.5px 0 #000, -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+],
   daisyui: {
     styled: false,
     themes: false,
     base: false,
   },
+  
 };

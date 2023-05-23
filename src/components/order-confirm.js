@@ -14,46 +14,46 @@ export default function directions() {
               <div className="h-full w-full">
                 <form className="border-x-slate-700 space-y-6">
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Ordered By:</p>
+                      <p className="text-2xl font-poppins text-outline text-white">Ordered By:</p>
                       <input type="text" placeholder="Full Name" className="input input-bordered rounded-full" />                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Contact Number:</p>
+                      <p className="text-2xl font-poppins text-outline text-white">Contact Number:</p>
                       <input type="text" placeholder="+63xxxxxxxxxx" className="input input-bordered rounded-full" />                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Date:</p>
-                      <p className="input input-bordered rounded-full"> 69/69/2069 </p>                   
+                      <p className="text-2xl font-poppins text-outline text-white">Date:</p>
+                      <p className="input input-bordered rounded-full font-poppins text-white"> 69/69/2069 </p>                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Time:</p>
-                      <p className="input input-bordered rounded-full"> ITS VALORANT TIME </p>                   
+                      <p className="text-2xl font-poppins text-outline text-white">Time:</p>
+                      <p className="input input-bordered rounded-full font-poppins  text-white"> ITS VALORANT TIME </p>                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Location:</p>
+                      <p className="text-2xl font-poppins text-outline text-white">Location:</p>
                       <input type="text" placeholder="Full Address" className="input input-bordered rounded-full" />                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Order/s:</p>
-                      <p className="input input-bordered rounded-full"> Hats1l0g </p>                   
+                      <p className="text-2xl font-poppins text-outline text-white">Order/s:</p>
+                      <p className="input input-bordered rounded-full font-poppins  text-white"> Hats1l0g </p>                   
                     </div>
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                     <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                      <p className="text-2xl">Pickup/Delivery:</p>
+                      <p className="text-2xl font-poppins text-outline text-white">Pickup/Delivery:</p>
                       <div className="flex flex-row gap-x-3">
-                        <p className="rounded-full bg-white p-2">Pickup</p>
-                        <p className="rounded-full bg-white p-2 ">Delivery</p>
+                        <p className="rounded-full bg-white p-2 font-poppins">Pickup</p>
+                        <p className="rounded-full bg-white p-2 font-poppins">Delivery</p>
                       </div>                  
                     </div>          
                     <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>       
                 </form>
                 <div className="py-3 flex items-center justify-center">
-                  <div className="card bg-base-300 rounded-full place-items-center w-24 hover:bg-lime-300 ">
+                  <div className="card bg-base-300 rounded-full place-items-center w-24 hover:bg-lime-300 font-poppins font-bold ">
                     <Link href ="#thankyou">Confirm</Link>
                   </div>
                 </div>

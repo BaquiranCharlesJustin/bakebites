@@ -45,9 +45,9 @@ export default function cupcake() {
 
             {/* <!--Title CupCakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="font-bold text-5xl">CUP CAKES</p>
+              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">CUP CAKES</p>
               <div>
-                <p className="italic text-2xl">
+                <p className="italic text-2xl text-outline font-poppins">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
                 </p>
               </div>
