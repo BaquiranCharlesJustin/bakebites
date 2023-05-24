@@ -1,16 +1,18 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import CakeModal from "./cake-modal";
-import Modal from "./modal";
+import BakeryModal from "./bakery-modal";
+import Modal from "./ProductModal";
+import Cart from "../pages/cart";
+import Order from "../pages/order";
 import { useRouter } from "next/router";
 
 export default function bakery() {
-  const { data, isLoading, isError } = fetcher("api/cakes");
+  const { data, isLoading, isError } = fetcher("api/bakery");
   let router = useRouter();
-  console.log(router)
+  console.log(router);
   return (
     <div id="bakery" className="">
-      {router.query.cakes && (
+      {router.query.bakery && (
         <Modal
           onClose={() => {
             router.push(
@@ -22,7 +24,37 @@ export default function bakery() {
             );
           }}
         >
-          <CakeModal cakeId={router.query.cakes}></CakeModal>
+          <BakeryModal bakeryId={router.query.bakery}></BakeryModal>
+        </Modal>
+      )}
+      {router.query.cart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Cart></Cart>
+        </Modal>
+      )}
+       {router.query.order && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <Order></Order>
         </Modal>
       )}
       {/* <!--NavBar--> */}
@@ -34,15 +66,20 @@ export default function bakery() {
               {/* <!-- CartMessageIcons --> */}
 
               <div className="flex h-36 w-36 gap-6 items-center">
-                <a href="#cartpage">
+                <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
+                </Link>
+                {/* <a href="">
+                  <img className="" src="/images/message.png" />
+                </a> */}
               </div>
             </div>
 
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
-              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">BAKERY</p>
+              <p className="font-bebasNeue tracking-widest text-weirdPinkColor text-outline text-5xl">
+                BAKERY
+              </p>
               <div>
                 <p className="italic text-2xl font-poppins text-outline">
                   (NOTE: PRICE MAY VARY DEPENDING ON THE DESIGN)
@@ -75,7 +112,7 @@ export default function bakery() {
 }
 
 function Cake({ data }) {
-  const { id, title } = data;
+  const { id, name } = data;
 
   return (
     <div class="flex flex-row">
@@ -85,8 +122,8 @@ function Cake({ data }) {
         alt=""
       />
       <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{title || "Unknown"}</p>
-        <Link scroll={false} href={`/?cakes=${id}`}>
+        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
+        <Link scroll={false} href={`/?bakery=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>
       </div>
