@@ -8,21 +8,30 @@ datasource db {
 }
 
 model Cake {
-  id   Int    @id @default(autoincrement())
-  name String
-  size String
+  id             Int           @id @default(autoincrement())
+  name           String
+  size           String
+  price          Int
+  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
+  orderSummaryId Int?
 }
 
 model Cupcake {
-  id   Int    @id @default(autoincrement())
-  name String
-  size String
+  id             Int           @id @default(autoincrement())
+  name           String
+  size           String
+  price          Int
+  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
+  orderSummaryId Int?
 }
 
 model Bakery {
-  id   Int    @id @default(autoincrement())
-  name String
-  size String
+  id             Int           @id @default(autoincrement())
+  name           String
+  size           String
+  price          Int
+  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
+  orderSummaryId Int?
 }
 
 model Cart {
@@ -34,13 +43,15 @@ model Cart {
 }
 
 model OrderSummary {
-  id            Int    @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String
   contactNumber String
   date          String
   time          String
   location      String
-  order         String
+  cake          Cake[]
+  cupcake       Cupcake[]
+  bakery        Bakery[]
   mode          String
   userSession   String
 }

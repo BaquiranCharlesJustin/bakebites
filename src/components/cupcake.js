@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 export default function cupcake() {
   const { data, isLoading, isError } = fetcher("api/cupcakes");
   let router = useRouter();
-  console.log(router)
   return (
     <div id="cupcake" className="">
       {router.query.cupcakes && (

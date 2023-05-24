@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 export default function cakes() {
   const { data, isLoading, isError } = fetcher("api/cakes");
   let router = useRouter();
-  console.log(router);
 
   return (
     <div id="cakes" className="bg-menuNavBar">

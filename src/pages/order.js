@@ -18,12 +18,35 @@ export default function order() {
     minute: "numeric",
     hour12: true,
   });
+  var userSession;
+  try {
+    userSession = sessionStorage.getItem("state");
+  } catch (error) {
+    console.log(error);
+  }
+
+  const { data, isLoading, isError } = fetcher(`api/carts/${userSession}`);
+  if (isError) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+  const cake = [];
+  const cupcake = [];
+  const bakery = [];
+
+  data.map((props) => {
+    if ("cake" == props.productType) {
+      cake.push(props.productId);
+      console.log(cake);
+    } else if ("cupcake" == props.productType) {
+      cupcake.push(props.productId);
+    } else if ("bakery" == props.productType) {
+      bakery.push(props.productId);
+    }
+  });
 
   const submitData = async (e) => {
     e.preventDefault();
     try {
       const userSession = sessionStorage.getItem("state");
-      const ordersa = "asd";
       const mode = "pickup";
       const body = {
         name,
@@ -31,7 +54,9 @@ export default function order() {
         date,
         time,
         location,
-        ordersa,
+        cake,
+        cupcake,
+        bakery,
         mode,
         userSession,
       };
@@ -46,6 +71,7 @@ export default function order() {
       console.error(error);
     }
   };
+
   return (
     <div id="order" className="bg-aboutUs h-screen">
       <nav className="p-3"></nav>
@@ -122,7 +148,9 @@ export default function order() {
                     <p className="text-2xl font-poppins text-outline text-white">
                       Order/s:
                     </p>
-                    <Orders></Orders>
+                    {data?.map((value, index) => (
+                      <Orders data={value} key={index}></Orders>
+                    ))}
                   </div>
                   <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
@@ -156,46 +184,41 @@ export default function order() {
     </div>
   );
 }
-function Orders() {
-  const userSession = sessionStorage.getItem("state")
-  const { data1, isLoading, isError } = fetcher(`api/carts/${userSession}`);
-  if (isError) return <div>failed to load</div>;
-  if (!data1) return <div>loading...</div>;
+function Orders({ data }) {
+  const { productId, productType, amount } = data;
 
-  if ("cake" == data1.productType) {
-    const { data, isLoading, isError } = fetcher(`api/cakes/${data1.productId}`);
+  if ("cake" == productType) {
+    const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (
       <>
         <p className="input input-bordered rounded-full font-poppins  text-white">
-          {data.name}
+          {data.name} x{amount}
         </p>
       </>
     );
   } else if ("cupcake" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/cupcake/${data1.productId}`);
+    const { data, isLoading, isError } = fetcher(`api/cupcakes/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (
       <>
         <p className="input input-bordered rounded-full font-poppins  text-white">
-          {data.name}
+          {data.name} x{amount}
         </p>
       </>
     );
   } else if ("bakery" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/bakery/${data1.productId}`);
+    const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (
       <>
         <p className="input input-bordered rounded-full font-poppins  text-white">
-          {data.name}
+          {data.name} x{amount}
         </p>
       </>
     );
   }
-
-  return <></>;
 }

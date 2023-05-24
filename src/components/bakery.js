@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 export default function bakery() {
   const { data, isLoading, isError } = fetcher("api/bakery");
   let router = useRouter();
-  console.log(router);
   return (
     <div id="bakery" className="">
       {router.query.bakery && (
