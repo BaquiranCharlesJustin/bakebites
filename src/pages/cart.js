@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import Modal from "../components/ProductModal";
-
 import { useRouter } from "next/router";
 
 export default function cartpage() {

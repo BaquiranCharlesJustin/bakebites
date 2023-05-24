@@ -71,9 +71,6 @@ export default function cakes() {
                 <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
                 </Link>
-                <Link scroll={false} href="/?order=1">
-                  <img className="" src="/images/message.png" />
-                </Link>
               </div>
             </div>
 

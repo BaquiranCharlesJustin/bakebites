@@ -1,6 +1,7 @@
 import Link from "next/link";
+import fetcher from "../lib/fetcher";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function order() {
   let router = useRouter();
@@ -39,8 +40,8 @@ export default function order() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }); 
-      await router.push('/thankyou')
+      });
+      await router.push("/thankyou");
     } catch (error) {
       console.error(error);
     }
@@ -121,10 +122,7 @@ export default function order() {
                     <p className="text-2xl font-poppins text-outline text-white">
                       Order/s:
                     </p>
-                    <p className="input input-bordered rounded-full font-poppins  text-white">
-                      {" "}
-                      Hats1l0g{" "}
-                    </p>
+                    <Orders></Orders>
                   </div>
                   <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
@@ -157,4 +155,47 @@ export default function order() {
       <nav className="p-3"></nav>
     </div>
   );
+}
+function Orders() {
+  const userSession = sessionStorage.getItem("state")
+  const { data1, isLoading, isError } = fetcher(`api/carts/${userSession}`);
+  if (isError) return <div>failed to load</div>;
+  if (!data1) return <div>loading...</div>;
+
+  if ("cake" == data1.productType) {
+    const { data, isLoading, isError } = fetcher(`api/cakes/${data1.productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    return (
+      <>
+        <p className="input input-bordered rounded-full font-poppins  text-white">
+          {data.name}
+        </p>
+      </>
+    );
+  } else if ("cupcake" == productType) {
+    const { data, isLoading, isError } = fetcher(`api/cupcake/${data1.productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    return (
+      <>
+        <p className="input input-bordered rounded-full font-poppins  text-white">
+          {data.name}
+        </p>
+      </>
+    );
+  } else if ("bakery" == productType) {
+    const { data, isLoading, isError } = fetcher(`api/bakery/${data1.productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    return (
+      <>
+        <p className="input input-bordered rounded-full font-poppins  text-white">
+          {data.name}
+        </p>
+      </>
+    );
+  }
+
+  return <></>;
 }

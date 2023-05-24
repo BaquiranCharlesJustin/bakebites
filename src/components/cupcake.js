@@ -68,10 +68,7 @@ export default function cupcake() {
               <div className="flex h-36 w-36 gap-6 items-center">
                 <Link scroll={false} href="/?cart=1">
                   <img className="" src="/images/cart.png" />
-                </a>
-                <a href="">
-                  <img className="" src="/images/message.png" />
-                </a>
+                </Link>
               </div>
             </div>
 
