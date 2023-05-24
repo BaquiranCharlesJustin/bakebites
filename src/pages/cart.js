@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function cartpage() {
   const { data, isLoading, isError } = fetcher("api/carts");
-  let router = useRouter();
+  if (isError) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
 
   return (
     <div id="cartpage" className="space-y-4 p-6">
@@ -39,7 +40,10 @@ export default function cartpage() {
             />
             <p className="text-3xl font-poppins text-outline">All</p>
           </div>
-          <p className="text-3xl font-poppins text-outline">Total: Amount</p>
+          <p className="text-3xl font-poppins text-outline">
+            Total:
+            <Tots data1={data} />
+          </p>
         </div>
         <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
           <Link scroll={false} href="/?order=1">
@@ -61,6 +65,7 @@ function Cart({ data1 }) {
     const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
+
     return (
       <>
         <div className="bg-menuNavBar border-4 border-aboutUs">
@@ -86,6 +91,9 @@ function Cart({ data1 }) {
               </div>
               <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
                 Amount: {amount}
+              </div>
+              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+                Price: {data.price}
               </div>
             </div>
           </div>
@@ -122,6 +130,9 @@ function Cart({ data1 }) {
               <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
                 Amount: {amount}
               </div>
+              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+                Price: {data.price}
+              </div>
             </div>
           </div>
         </div>
@@ -131,6 +142,7 @@ function Cart({ data1 }) {
     const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
+
     return (
       <>
         <div className="bg-menuNavBar border-4 border-aboutUs">
@@ -157,6 +169,9 @@ function Cart({ data1 }) {
               <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
                 Amount: {amount}
               </div>
+              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+                Price: {data.price}
+              </div>
             </div>
           </div>
         </div>
@@ -164,4 +179,33 @@ function Cart({ data1 }) {
     );
   }
   return <></>;
+}
+
+function Tots({ data1 }) {
+  const [count, setCount] = useState(0);
+  const { userSession, productId, amount, productType } = data1;
+  if (sessionStorage.getItem("state") != userSession) {
+    return;
+  }
+
+  let totalPrice = 0;
+  if ("cake" == productType) {
+    const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    totalPrice += data.price * amount;
+  } else if (productType == "cupcake") {
+    const { data, isLoading, isError } = fetcher(`api/cupcakes/${productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    totalPrice += data.price * amount;
+  } else if (productType == "bakery") {
+    const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
+    if (isError) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
+    totalPrice += data.price * amount;
+  }
+  setCount(totalPrice);
+  console.log(count)
+  return <>{count}</>;
 }
