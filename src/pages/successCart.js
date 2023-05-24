@@ -1,4 +1,4 @@
-export default function SuccessAddCart({ cakeId }) {
+export default function SuccessCart() {
     
     return (
       <div>

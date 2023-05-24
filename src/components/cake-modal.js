@@ -13,7 +13,7 @@ export default function CakeModal({ cakeId }) {
 
 function Modal({ id, name, size }) {
   const [count, setCount] = useState(1);
-  const productType = "cake"
+  const productType = "cake";
   const submitData = async (e) => {
     e.preventDefault();
     try {
@@ -58,11 +58,14 @@ function Modal({ id, name, size }) {
         </div>
       </div>
       <div className="card-body">
-        <div className="card-actions grid grid-cols-2 gap-2">
+        <div
+          className="card-actions grid grid-cols-2 gap-2"
+          onClick={submitData}
+        >
           {/* <!-- Add to Cart Button --> */}
           <Link
-            href="/?api/add_cart"
-            onClick={submitData}
+            scroll={false}
+            href="/?successCart=1"
             className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3"
           >
             <img className="w-6 h-6" src="/images/cart.png" />

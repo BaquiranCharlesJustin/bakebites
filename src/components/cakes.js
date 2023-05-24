@@ -4,6 +4,7 @@ import CakeModal from "./cake-modal";
 import Modal from "./ProductModal";
 import Cart from "../pages/cart";
 import Order from "../pages/order";
+import SuccessAddCart from "../pages/successCart";
 
 import { useRouter } from "next/router";
 
@@ -56,6 +57,21 @@ export default function cakes() {
           }}
         >
           <Order></Order>
+        </Modal>
+      )}
+      {router.query.successCart && (
+        <Modal
+          onClose={() => {
+            router.push(
+              {
+                pathname: router.pathname,
+              },
+              undefined,
+              { scroll: false }
+            );
+          }}
+        >
+          <SuccessAddCart></SuccessAddCart>
         </Modal>
       )}
       {/* <!--NavBar--> */}
