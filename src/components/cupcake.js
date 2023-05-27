@@ -109,14 +109,14 @@ function Cake({ data }) {
   const { id, name } = data;
 
   return (
-    <div class="flex flex-row">
+    <div className="flex flex-row">
       <img
-        class="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
+        className="p-6 h-64 w-64 rounded-full border-4 border-menuNavBar bg-menuNavBar flex justify-center items-center"
         src={`/images/cupcakes${id}.jpg`}
         alt=""
       />
-      <div class="p-6 flex flex-col justify-center items-center text-center gap-5">
-        <p class="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
+      <div className="p-6 flex flex-col justify-center items-center text-center gap-5">
+        <p className="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
         <Link scroll={false} href={`/?cupcakes=${id}`}>
           <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
         </Link>

@@ -97,7 +97,7 @@ export default function order() {
                       className="input input-bordered rounded-full"
                     />
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Contact Number:
@@ -111,7 +111,7 @@ export default function order() {
                       className="input input-bordered rounded-full"
                     />
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Date:
@@ -120,7 +120,7 @@ export default function order() {
                       {date}
                     </p>
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Time:
@@ -129,7 +129,7 @@ export default function order() {
                       {time}
                     </p>
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Location:
@@ -143,7 +143,7 @@ export default function order() {
                       className="input input-bordered rounded-full"
                     />
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Order/s:
@@ -152,7 +152,7 @@ export default function order() {
                       <Orders data={value} key={index}></Orders>
                     ))}
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
                       Pickup/Delivery:
@@ -166,7 +166,7 @@ export default function order() {
                       </p>
                     </div>
                   </div>
-                  <div class="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
+                  <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                 </div>
                 <div className="py-3 flex items-center justify-center">
                   <div className="card bg-base-300 rounded-full place-items-center w-24 hover:bg-lime-300 font-poppins font-bold ">

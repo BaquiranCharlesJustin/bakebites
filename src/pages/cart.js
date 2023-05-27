@@ -36,7 +36,7 @@ export default function cartpage() {
             <input
               type="checkbox"
               checked="checked"
-              class="checkbox checkbox-lg"
+              className="checkbox checkbox-lg"
             />
             <p className="text-3xl font-poppins text-outline">All</p>
           </div>
@@ -74,7 +74,7 @@ function Cart({ data1 }) {
               <input
                 type="checkbox"
                 checked="checked"
-                class="checkbox checkbox-lg"
+                className="checkbox checkbox-lg"
               />
               <Image
                 className="border-menuNavBar bg-menuNavBar rounded-full"
@@ -112,7 +112,7 @@ function Cart({ data1 }) {
               <input
                 type="checkbox"
                 checked="checked"
-                class="checkbox checkbox-lg"
+                className="checkbox checkbox-lg"
               />
               <Image
                 className="border-menuNavBar bg-menuNavBar rounded-full"
@@ -151,7 +151,7 @@ function Cart({ data1 }) {
               <input
                 type="checkbox"
                 checked="checked"
-                class="checkbox checkbox-lg"
+                className="checkbox checkbox-lg"
               />
               <Image
                 className="border-menuNavBar bg-menuNavBar rounded-full"
