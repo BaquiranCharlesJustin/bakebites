@@ -27,21 +27,7 @@ export default function order() {
 
   const { data, isLoading, isError } = fetcher(`api/carts/${userSession}`);
   if (isError) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  const cake = [];
-  const cupcake = [];
-  const bakery = [];
-
-  data.map((props) => {
-    if ("cake" == props.productType) {
-      cake.push(props.productId);
-      console.log(cake);
-    } else if ("cupcake" == props.productType) {
-      cupcake.push(props.productId);
-    } else if ("bakery" == props.productType) {
-      bakery.push(props.productId);
-    }
-  });
+  if (isLoading) return <div>loading...</div>;
 
   const submitData = async (e) => {
     e.preventDefault();
@@ -54,9 +40,6 @@ export default function order() {
         date,
         time,
         location,
-        cake,
-        cupcake,
-        bakery,
         mode,
         userSession,
       };

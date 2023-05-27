@@ -4,6 +4,8 @@ import { useState } from "react";
 
 export default function CakeModal({ cakeId }) {
   const { data, isLoading, isError } = fetcher(`api/cakes/${cakeId}`);
+  if (isError) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
   return (
     <>
       <Modal {...data}></Modal>
@@ -14,12 +16,12 @@ export default function CakeModal({ cakeId }) {
 function Modal({ id, name, size }) {
   const [count, setCount] = useState(1);
   const productType = "cake";
+  const userSession = sessionStorage.getItem("state");
+
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      const userSession = sessionStorage.getItem("state");
       const body = { id, productType, count, userSession };
-
       await fetch(`api/add_cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,6 +31,7 @@ function Modal({ id, name, size }) {
       console.error(error);
     }
   };
+
   const inc = (event) => {
     console.log("btn", event.target);
     setCount(count + 1);
@@ -71,9 +74,13 @@ function Modal({ id, name, size }) {
             <img className="w-6 h-6" src="/images/cart.png" />
             Add to Cart
           </Link>
-          <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
+          <Link
+            scroll={false}
+            href="/?order=1"
+            className="btn btn-primary bg-button1/70 rounded-full text-lg px-2"
+          >
             Buy now
-          </button>
+          </Link>
         </div>
       </div>
     </>
