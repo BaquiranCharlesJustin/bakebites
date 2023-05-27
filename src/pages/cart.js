@@ -42,7 +42,7 @@ export default function cartpage() {
           </div>
           <p className="text-3xl font-poppins text-outline">
             Total:
-            <Tots data1={data} />
+            <Tots/>
           </p>
         </div>
         <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
@@ -181,31 +181,51 @@ function Cart({ data1 }) {
   return <></>;
 }
 
-function Tots({ data1 }) {
-  const [count, setCount] = useState(0);
-  const { userSession, productId, amount, productType } = data1;
-  if (sessionStorage.getItem("state") != userSession) {
-    return;
-  }
+function Tots() {
+  const { data: cartData, isLoading: cartLoading, isError: cartError } = fetcher("api/carts");
 
-  let totalPrice = 0;
-  if ("cake" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-    totalPrice += data.price * amount;
-  } else if (productType == "cupcake") {
-    const { data, isLoading, isError } = fetcher(`api/cupcakes/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-    totalPrice += data.price * amount;
-  } else if (productType == "bakery") {
-    const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-    totalPrice += data.price * amount;
-  }
-  setCount(totalPrice);
-  console.log(count)
-  return <>{count}</>;
+  const calculateTotal = () => {
+    let totalPrice = 0;
+
+    cartData.forEach((product) => {
+      const productType = product.productType;
+      const productId = product.productId;
+      const amount = product.amount;
+
+      if (productType === "cake") {
+        const { data: cakeData, isLoading: cakeLoading, isError: cakeError } = fetcher(
+          `api/cakes/${productId}`
+        );
+
+        if (!cakeLoading && !cakeError && cakeData) {
+          totalPrice += cakeData.price * amount;
+        }
+      } else if (productType === "cupcake") {
+        const { data: cupcakeData, isLoading: cupcakeLoading, isError: cupcakeError } = fetcher(
+          `api/cupcakes/${productId}`
+        );
+
+        if (!cupcakeLoading && !cupcakeError && cupcakeData) {
+          totalPrice += cupcakeData.price * amount;
+        }
+      } else if (productType === "bakery") {
+        const { data: bakeryData, isLoading: bakeryLoading, isError: bakeryError } = fetcher(
+          `api/bakery/${productId}`
+        );
+
+        if (!bakeryLoading && !bakeryError && bakeryData) {
+          totalPrice += bakeryData.price * amount;
+        }
+      }
+    });
+
+    return totalPrice;
+  };
+
+  if (cartError) return <div>Failed to load cart data</div>;
+  if (cartLoading) return <div>Loading cart data...</div>;
+
+  const total = calculateTotal();
+
+  return <>{total}</>;
 }
