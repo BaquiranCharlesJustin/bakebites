@@ -143,7 +143,7 @@ export default function order() {
                     <p className="text-2xl font-poppins text-outline text-white">
                       Total Amount:
                     </p>
-                    <Tots />
+                    <Tots data={data} />
                   </div>
                   <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
@@ -216,23 +216,11 @@ function Orders({ data }) {
   }
 }
 
-function Tots() {
-  var userSession;
-  try {
-    userSession = sessionStorage.getItem("state");
-  } catch (error) {
-    console.log(error);
-  }
-  const {
-    data: cartData,
-    isLoading: cartLoading,
-    isError: cartError,
-  } = fetcher(`api/carts/${userSession}`);
-
+function Tots({ data }) {
   const calculateTotal = () => {
     let totalPrice = 0;
 
-    cartData.forEach((product) => {
+    data.forEach((product) => {
       const productType = product.productType;
       const productId = product.productId;
       const amount = product.amount;

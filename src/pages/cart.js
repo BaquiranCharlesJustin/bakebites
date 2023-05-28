@@ -1,12 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
-import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function cartpage() {
-  const { data, isLoading, isError } = fetcher("api/carts");
-  if (isError) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  var userSession;
+  try {
+    userSession = sessionStorage.getItem("state");
+  } catch (error) {
+    console.log(error);
+  }
+  const {
+    data: cartData,
+    isLoading: cartLoading,
+    isError: cartError,
+  } = fetcher(`api/carts/${userSession}`);
+  if (cartError) return <div>Failed to load cart data</div>;
+  if (cartLoading) return <div>Loading cart data...</div>;
+
+  const clearData = () => {
+    sessionStorage.setItem("state", uuidv4());
+  };
 
   return (
     <div id="cartpage" className="space-y-4 p-6">
@@ -26,8 +40,8 @@ export default function cartpage() {
         </h1>
       </div>
 
-      {data?.map((value, index) => (
-        <Cart data1={value} key={index}></Cart>
+      {cartData?.map((value, index) => (
+        <Cart data={value} key={index}></Cart>
       ))}
 
       <div className="bg-menuNavBar border-4 border-aboutUs p-1 flex">
@@ -42,8 +56,13 @@ export default function cartpage() {
           </div>
           <p className="text-3xl font-poppins text-outline">
             Total:
-            <Tots />
+            <Tots data={cartData} />
           </p>
+        </div>
+        <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
+          <Link onClick={clearData} scroll={false} href="/?cart=1">
+            Clear Order/s
+          </Link>
         </div>
         <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
           <Link scroll={false} href="/?order=1">
@@ -55,8 +74,8 @@ export default function cartpage() {
   );
 }
 
-function Cart({ data1 }) {
-  const { id, userSession, productId, amount, productType } = data1;
+function Cart({ data }) {
+  const { id, userSession, productId, amount, productType } = data;
   if (sessionStorage.getItem("state") != userSession) {
     return;
   }
@@ -181,23 +200,11 @@ function Cart({ data1 }) {
   return <></>;
 }
 
-function Tots() {
-  var userSession;
-  try {
-    userSession = sessionStorage.getItem("state");
-  } catch (error) {
-    console.log(error);
-  }
-  const {
-    data: cartData,
-    isLoading: cartLoading,
-    isError: cartError,
-  } = fetcher(`api/carts/${userSession}`);
-
+function Tots({ data }) {
   const calculateTotal = () => {
     let totalPrice = 0;
 
-    cartData.forEach((product) => {
+    data.forEach((product) => {
       const productType = product.productType;
       const productId = product.productId;
       const amount = product.amount;
@@ -237,9 +244,6 @@ function Tots() {
 
     return totalPrice;
   };
-
-  if (cartError) return <div>Failed to load cart data</div>;
-  if (cartLoading) return <div>Loading cart data...</div>;
 
   const total = calculateTotal();
 
