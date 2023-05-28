@@ -14,12 +14,12 @@ export default function CakeModal({ bakeryId }) {
 function Modal({ id, name, size }) {
   const [count, setCount] = useState(1);
   const productType = "bakery";
+  const userSession = sessionStorage.getItem("state");
+
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      const userSession = sessionStorage.getItem("state");
       const body = { id, productType, count, userSession };
-
       await fetch(`api/add_cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,6 +29,7 @@ function Modal({ id, name, size }) {
       console.error(error);
     }
   };
+
   const inc = (event) => {
     console.log("btn", event.target);
     setCount(count + 1);
@@ -57,19 +58,26 @@ function Modal({ id, name, size }) {
         </div>
       </div>
       <div className="card-body">
-        <div className="card-actions grid grid-cols-2 gap-2">
+        <div
+          className="card-actions grid grid-cols-2 gap-2"
+          onClick={submitData}
+        >
           {/* <!-- Add to Cart Button --> */}
           <Link
-            href="/?api/add_cart"
-            onClick={submitData}
+            scroll={false}
+            href="/?successCart=1"
             className="bg-menuNavBar rounded-full px-2 gap-6 flex btn btn-primary text-center text-lg pl-3"
           >
             <img className="w-6 h-6" src="/images/cart.png" />
             Add to Cart
           </Link>
-          <button className="btn btn-primary bg-button1/70 rounded-full text-lg px-2">
+          <Link
+            scroll={false}
+            href="/?order=1"
+            className="btn btn-primary bg-button1/70 rounded-full text-lg px-2"
+          >
             Buy now
-          </button>
+          </Link>
         </div>
       </div>
     </>

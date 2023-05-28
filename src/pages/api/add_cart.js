@@ -9,10 +9,10 @@ export default async function handler(req, res) {
       productId: id,
     },
   });
-  if (existingProduct) {
+  if (existingProduct && productType == existingProduct.productType) {
     const result = await prisma.cart.update({
       where: { id: existingProduct.id },
-      data: { amount: existingProduct.amount + 1 },
+      data: { amount: existingProduct.amount + count },
     });
     res.json(result);
   } else {
