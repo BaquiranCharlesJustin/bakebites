@@ -1,14 +1,16 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import { useRouter } from "next/router";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { RadioGroup } from "@headlessui/react";
 
 export default function order() {
   let router = useRouter();
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [location, setLocation] = useState("");
+  const [mode, setMode] = useState("Pickup");
 
   const current = new Date();
   const date = `${current.getDate()}/${
@@ -36,7 +38,7 @@ export default function order() {
 
     try {
       const userSession = sessionStorage.getItem("state");
-      const mode = "pickup";
+
       const body = {
         name,
         contactNumber,
@@ -146,19 +148,41 @@ export default function order() {
                     <Tots data={data} />
                   </div>
                   <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
-                  <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
-                    <p className="text-2xl font-poppins text-outline text-white">
-                      Pickup/Delivery:
-                    </p>
-                    <div className="flex flex-row gap-x-3">
-                      <p className="rounded-full bg-white p-2 font-poppins">
-                        Pickup
-                      </p>
-                      <p className="rounded-full bg-white p-2 font-poppins">
-                        Delivery
-                      </p>
-                    </div>
-                  </div>
+
+                  <RadioGroup
+                    className="flex justify-between gap-x-2 place-items-center px-2 text-xl"
+                    value={mode}
+                    onChange={setMode}
+                  >
+                    <RadioGroup.Label className="text-2xl font-poppins text-outline text-white">
+                      Pickup/Delivery
+                    </RadioGroup.Label>
+                    <RadioGroup.Option
+                      className="rounded-full bg-white p-2 font-poppins"
+                      value="Pickup"
+                    >
+                      {({ checked }) => (
+                        <div
+                          className={checked ? "bg-blue-200 rounded-full" : ""}
+                        >
+                          Pickup
+                        </div>
+                      )}
+                    </RadioGroup.Option>
+                    <RadioGroup.Option
+                      className="rounded-full bg-white p-2 font-poppins"
+                      value="Delivery"
+                    >
+                      {({ checked }) => (
+                        <div
+                          className={checked ? "bg-blue-200 rounded-full" : ""}
+                        >
+                          Delivery
+                        </div>
+                      )}
+                    </RadioGroup.Option>
+                  </RadioGroup>
+
                   <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                 </div>
                 <div className="py-3 flex items-center justify-center">
