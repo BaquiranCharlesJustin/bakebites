@@ -2,26 +2,45 @@ import Image from "next/image";
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
 
 export default function cartpage() {
-  var userSession;
-  try {
-    userSession = sessionStorage.getItem("state");
-  } catch (error) {
-    console.log(error);
-  }
-  const {
-    data: cartData,
-    isLoading: cartLoading,
-    isError: cartError,
-  } = fetcher(`api/carts/${userSession}`);
-  if (cartError) return <div>Failed to load cart data</div>;
-  if (cartLoading) return <div>Loading cart data...</div>;
+  const [cartData, setCartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const userSession = sessionStorage.getItem("state");
+    fetchCartData(userSession);
+  }, []);
+
+  const fetchCartData = async (userSession) => {
+    try {
+      const response = await fetch(`api/carts/${userSession}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart data");
+      }
+      const data = await response.json();
+      setCartData(data);
+    } catch (error) {
+      setIsError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const clearData = () => {
     sessionStorage.setItem("state", uuidv4());
   };
 
+  if (isError) {
+    return <div>Failed to load cart data</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading cart data...</div>;
+  }
   return (
     <div id="cartpage" className="space-y-4 p-6">
       <div className="bg-menuNavBar border-4 border-aboutUs flex justify-center items-center space-x-4">
@@ -40,9 +59,7 @@ export default function cartpage() {
         </h1>
       </div>
 
-      {cartData?.map((value, index) => (
-        <Cart data={value} key={index}></Cart>
-      ))}
+      <Cart data={cartData} />
 
       <div className="bg-menuNavBar border-4 border-aboutUs p-1 flex">
         <div className="bg-menuNavBar border-2 border-black py-2 px-4 flex justify-between grow">
@@ -75,129 +92,238 @@ export default function cartpage() {
 }
 
 function Cart({ data }) {
-  const { id, userSession, productId, amount, productType } = data;
-  if (sessionStorage.getItem("state") != userSession) {
-    return;
+  return (
+    <>
+      {data.map((value, index) => (
+        <CartItem key={index} data={value} />
+      ))}
+    </>
+  );
+}
+
+function CartItem({ data }) {
+  const { productId, amount, productType } = data;
+
+  if (productType === "cake") {
+    return <CakeCart productId={productId} amount={amount} />;
   }
 
-  if ("cake" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-
-    return (
-      <>
-        <div className="bg-menuNavBar border-4 border-aboutUs">
-          <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
-            <div className="flex items-center gap-8">
-              <input
-                type="checkbox"
-                checked="checked"
-                className="checkbox checkbox-lg"
-              />
-              <Image
-                className="border-menuNavBar bg-menuNavBar rounded-full"
-                src={`/images/cake${data.id}.jpg`}
-                width={250}
-                height={100}
-                fill={false}
-              />
-              <p className="font-poppins text-xl font-bold">{data.name}</p>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
-                Size: {data.size}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Amount: {amount}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Price: {data.price}
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  } else if (productType == "cupcake") {
-    const { data, isLoading, isError } = fetcher(`api/cupcakes/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-    return (
-      <>
-        <div className="bg-menuNavBar border-4 border-aboutUs">
-          <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
-            <div className="flex items-center gap-8">
-              <input
-                type="checkbox"
-                checked="checked"
-                className="checkbox checkbox-lg"
-              />
-              <Image
-                className="border-menuNavBar bg-menuNavBar rounded-full"
-                src={`/images/cupcakes${data.id}.jpg`}
-                width={250}
-                height={100}
-                fill={false}
-              />
-              <p className="font-poppins text-xl font-bold">{data.name}</p>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
-                Size: {data.size}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Amount: {amount}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Price: {data.price}
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  } else if (productType == "bakery") {
-    const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
-    if (isError) return <div>failed to load</div>;
-    if (!data) return <div>loading...</div>;
-
-    return (
-      <>
-        <div className="bg-menuNavBar border-4 border-aboutUs">
-          <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
-            <div className="flex items-center gap-8">
-              <input
-                type="checkbox"
-                checked="checked"
-                className="checkbox checkbox-lg"
-              />
-              <Image
-                className="border-menuNavBar bg-menuNavBar rounded-full"
-                src={`/images/bakery${data.id}.jpg`}
-                width={250}
-                height={100}
-                fill={false}
-              />
-              <p className="font-poppins text-xl font-bold">{data.name}</p>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
-                Size: {data.size}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Amount: {amount}
-              </div>
-              <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
-                Price: {data.price}
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+  if (productType === "cupcake") {
+    return <CupcakeCart productId={productId} amount={amount} />;
   }
-  return <></>;
+
+  if (productType === "bakery") {
+    return <BakeryCart productId={productId} amount={amount} />;
+  }
+
+  return null;
+}
+
+function CakeCart({ productId, amount }) {
+  const [cakeData, setCakeData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    fetchCakeData(productId);
+  }, [productId]);
+
+  const fetchCakeData = async (productId) => {
+    try {
+      const response = await fetch(`api/cakes/${productId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch cake data");
+      }
+      const data = await response.json();
+      setCakeData(data);
+    } catch (error) {
+      setIsError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isError) {
+    return <div>Failed to load cake data</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading cake data...</div>;
+  }
+
+  return (
+    <>
+      <div className="bg-menuNavBar border-4 border-aboutUs">
+        <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
+          <div className="flex items-center gap-8">
+            <input
+              type="checkbox"
+              checked="checked"
+              className="checkbox checkbox-lg"
+            />
+            <Image
+              className="border-menuNavBar bg-menuNavBar rounded-full"
+              src={`/images/cake${cakeData.id}.jpg`}
+              width={250}
+              height={100}
+              fill={false}
+            />
+            <p className="font-poppins text-xl font-bold">{cakeData.name}</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
+              Size: {cakeData.size}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Amount: {amount}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Price: {cakeData.price}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function CupcakeCart({ productId, amount }) {
+  const [cupcakeData, setCupcakeData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    fetchcupcakeData(productId);
+  }, [productId]);
+
+  const fetchcupcakeData = async (productId) => {
+    try {
+      const response = await fetch(`api/cupcakes/${productId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch cake data");
+      }
+      const data = await response.json();
+      setCupcakeData(data);
+    } catch (error) {
+      setIsError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isError) {
+    return <div>Failed to load cake data</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading cake data...</div>;
+  }
+
+  return (
+    <>
+      <div className="bg-menuNavBar border-4 border-aboutUs">
+        <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
+          <div className="flex items-center gap-8">
+            <input
+              type="checkbox"
+              checked="checked"
+              className="checkbox checkbox-lg"
+            />
+            <Image
+              className="border-menuNavBar bg-menuNavBar rounded-full"
+              src={`/images/cupcakes${cupcakeData.id}.jpg`}
+              width={250}
+              height={100}
+              fill={false}
+            />
+            <p className="font-poppins text-xl font-bold">{cupcakeData.name}</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
+              Size: {cupcakeData.size}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Amount: {amount}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Price: {cupcakeData.price}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function BakeryCart({ productId, amount }) {
+  const [bakeryData, setBakeryData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    fetchbakeryData(productId);
+  }, [productId]);
+
+  const fetchbakeryData = async (productId) => {
+    try {
+      const response = await fetch(`api/bakery/${productId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch cake data");
+      }
+      const data = await response.json();
+      setBakeryData(data);
+    } catch (error) {
+      setIsError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isError) {
+    return <div>Failed to load cake data</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading cake data...</div>;
+  }
+
+  return (
+    <>
+      <div className="bg-menuNavBar border-4 border-aboutUs">
+        <div className="bg-menuNavBar border-2 border-black flex justify-between items-center py-2 px-4">
+          <div className="flex items-center gap-8">
+            <input
+              type="checkbox"
+              checked="checked"
+              className="checkbox checkbox-lg"
+            />
+            <Image
+              className="border-menuNavBar bg-menuNavBar rounded-full"
+              src={`/images/bakery${bakeryData.id}.jpg`}
+              width={250}
+              height={100}
+              fill={false}
+            />
+            <p className="font-poppins text-xl font-bold">{bakeryData.name}</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-3xl font-poppins text-outline">
+              Size: {bakeryData.size}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Amount: {amount}
+            </div>
+            <div className="bg-menuNavBar border-2 border-black py-2 px-4 text-xl font-poppins text-outline">
+              Price: {bakeryData.price}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 function Tots({ data }) {

@@ -11,6 +11,7 @@ export default function order() {
   const [contactNumber, setContactNumber] = useState("");
   const [location, setLocation] = useState("");
   const [mode, setMode] = useState("Pickup");
+  const [total, setTotal] = useState(0)
 
   const current = new Date();
   const date = `${current.getDate()}/${

@@ -12,8 +12,6 @@ model Cake {
   name           String
   size           String
   price          Int
-  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
-  orderSummaryId Int?
 }
 
 model Cupcake {
@@ -21,8 +19,6 @@ model Cupcake {
   name           String
   size           String
   price          Int
-  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
-  orderSummaryId Int?
 }
 
 model Bakery {
@@ -30,8 +26,6 @@ model Bakery {
   name           String
   size           String
   price          Int
-  OrderSummary   OrderSummary? @relation(fields: [orderSummaryId], references: [id])
-  orderSummaryId Int?
 }
 
 model Cart {
@@ -49,9 +43,7 @@ model OrderSummary {
   date          String
   time          String
   location      String
-  cake          Cake[]
-  cupcake       Cupcake[]
-  bakery        Bakery[]
+  amount        Int
   mode          String
   userSession   String
 }
