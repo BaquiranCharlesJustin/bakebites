@@ -1,34 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import fetcher from "../lib/fetcher";
+import useFetcher from "../lib/fetcher";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 
 export default function cartpage() {
-  const [cartData, setCartData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  var userSession;
+  try {
+    userSession = sessionStorage.getItem("state");
+  } catch (error) {
+    console.log(error);
+  }
 
-  useEffect(() => {
-    const userSession = sessionStorage.getItem("state");
-    fetchCartData(userSession);
-  }, []);
-
-  const fetchCartData = async (userSession) => {
-    try {
-      const response = await fetch(`api/carts/${userSession}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart data");
-      }
-      const data = await response.json();
-      setCartData(data);
-    } catch (error) {
-      setIsError(true);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { data, isLoading, isError } = useFetcher(`api/carts/${userSession}`);
+  if (isError) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
 
   const clearData = () => {
     sessionStorage.setItem("state", uuidv4());
@@ -59,7 +45,7 @@ export default function cartpage() {
         </h1>
       </div>
 
-      <Cart data={cartData} />
+      <Cart data={data} />
 
       <div className="bg-menuNavBar border-4 border-aboutUs p-1 flex">
         <div className="bg-menuNavBar border-2 border-black py-2 px-4 flex justify-between grow">
@@ -73,7 +59,7 @@ export default function cartpage() {
           </div>
           <p className="text-3xl font-poppins text-outline">
             Total:
-            <Tots data={cartData} />
+            <Tots data={data} />
           </p>
         </div>
         <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
@@ -340,7 +326,7 @@ function Tots({ data }) {
           data: cakeData,
           isLoading: cakeLoading,
           isError: cakeError,
-        } = fetcher(`api/cakes/${productId}`);
+        } = useFetcher(`api/cakes/${productId}`);
 
         if (!cakeLoading && !cakeError && cakeData) {
           totalPrice += cakeData.price * amount;
@@ -350,7 +336,7 @@ function Tots({ data }) {
           data: cupcakeData,
           isLoading: cupcakeLoading,
           isError: cupcakeError,
-        } = fetcher(`api/cupcakes/${productId}`);
+        } = useFetcher(`api/cupcakes/${productId}`);
 
         if (!cupcakeLoading && !cupcakeError && cupcakeData) {
           totalPrice += cupcakeData.price * amount;
@@ -360,7 +346,7 @@ function Tots({ data }) {
           data: bakeryData,
           isLoading: bakeryLoading,
           isError: bakeryError,
-        } = fetcher(`api/bakery/${productId}`);
+        } = useFetcher(`api/bakery/${productId}`);
 
         if (!bakeryLoading && !bakeryError && bakeryData) {
           totalPrice += bakeryData.price * amount;

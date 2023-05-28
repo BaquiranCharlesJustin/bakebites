@@ -1,5 +1,5 @@
 import Link from "next/link";
-import fetcher from "../lib/fetcher";
+import useFetcher  from "../lib/fetcher";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -29,7 +29,7 @@ export default function order() {
     console.log(error);
   }
 
-  const { data, isLoading, isError } = fetcher(`api/carts/${userSession}`);
+  const { data, isLoading, isError } = useFetcher(`api/carts/${userSession}`);
   if (isError) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 
@@ -46,7 +46,7 @@ export default function order() {
           data: cakeData,
           isLoading: cakeLoading,
           isError: cakeError,
-        } = fetcher(`api/cakes/${productId}`);
+        } = useFetcher(`api/cakes/${productId}`);
 
         if (!cakeLoading && !cakeError && cakeData) {
           totalPrice += cakeData.price * amount;
@@ -56,7 +56,7 @@ export default function order() {
           data: cupcakeData,
           isLoading: cupcakeLoading,
           isError: cupcakeError,
-        } = fetcher(`api/cupcakes/${productId}`);
+        } = useFetcher(`api/cupcakes/${productId}`);
 
         if (!cupcakeLoading && !cupcakeError && cupcakeData) {
           totalPrice += cupcakeData.price * amount;
@@ -66,7 +66,7 @@ export default function order() {
           data: bakeryData,
           isLoading: bakeryLoading,
           isError: bakeryError,
-        } = fetcher(`api/bakery/${productId}`);
+        } = useFetcher(`api/bakery/${productId}`);
 
         if (!bakeryLoading && !bakeryError && bakeryData) {
           totalPrice += bakeryData.price * amount;
@@ -252,7 +252,7 @@ function Orders({ data }) {
   const { productId, productType, amount } = data;
 
   if ("cake" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/cakes/${productId}`);
+    const { data, isLoading, isError } = useFetcher(`api/cakes/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (
@@ -263,7 +263,7 @@ function Orders({ data }) {
       </>
     );
   } else if ("cupcake" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/cupcakes/${productId}`);
+    const { data, isLoading, isError } = useFetcher(`api/cupcakes/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (
@@ -274,7 +274,7 @@ function Orders({ data }) {
       </>
     );
   } else if ("bakery" == productType) {
-    const { data, isLoading, isError } = fetcher(`api/bakery/${productId}`);
+    const { data, isLoading, isError } = useFetcher(`api/bakery/${productId}`);
     if (isError) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>;
     return (

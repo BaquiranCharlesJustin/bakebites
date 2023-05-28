@@ -1,77 +1,79 @@
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import fetcher from "../lib/fetcher";
+import { useRouter } from "next/router";
+import useFetcher from "../lib/fetcher";
 import CakeModal from "./cake-modal";
 import Modal from "./ProductModal";
 import Cart from "../pages/cart";
 import Order from "../pages/order";
 import SuccessAddCart from "../pages/successCart";
 
-import { useRouter } from "next/router";
+export default function Cakes() {
+  const router = useRouter();
+  
+  const { data, isLoading, isError } = useFetcher("api/cakes");
 
-export default function cakes() {
-  const { data, isLoading, isError } = fetcher("api/cakes");
-  let router = useRouter();
+  const handleCartClick = (event) => {
+    event.preventDefault();
+    router.push("/?cart=1", undefined, { scroll: false });
+  };
+
+  const handleCakeClick = (cakeId) => {
+    router.push(`/?cakes=${cakeId}`, undefined, { scroll: false });
+  };
+
+  if (isLoading) {
+    return <p>Loading cakes...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading cakes. Please try again later.</p>;
+  }
 
   return (
     <div id="cakes" className="bg-menuNavBar">
       {router.query.cakes && (
         <Modal
           onClose={() => {
-            router.push(
-              {
-                pathname: router.pathname,
-              },
-              undefined,
-              { scroll: false }
-            );
+            router.push({ pathname: router.pathname }, undefined, {
+              scroll: false,
+            });
           }}
         >
-          <CakeModal cakeId={router.query.cakes}></CakeModal>
+          <CakeModal cakeId={router.query.cakes} />
         </Modal>
       )}
       {router.query.cart && (
         <Modal
           onClose={() => {
-            router.push(
-              {
-                pathname: router.pathname,
-              },
-              undefined,
-              { scroll: false }
-            );
+            router.push({ pathname: router.pathname }, undefined, {
+              scroll: false,
+            });
           }}
         >
-          <Cart></Cart>
+          <Cart />
         </Modal>
       )}
       {router.query.order && (
         <Modal
           onClose={() => {
-            router.push(
-              {
-                pathname: router.pathname,
-              },
-              undefined,
-              { scroll: false }
-            );
+            router.push({ pathname: router.pathname }, undefined, {
+              scroll: false,
+            });
           }}
         >
-          <Order></Order>
+          <Order />
         </Modal>
       )}
       {router.query.successCart && (
         <Modal
           onClose={() => {
-            router.push(
-              {
-                pathname: router.pathname,
-              },
-              undefined,
-              { scroll: false }
-            );
+            router.push({ pathname: router.pathname }, undefined, {
+              scroll: false,
+            });
           }}
         >
-          <SuccessAddCart></SuccessAddCart>
+          <SuccessAddCart />
         </Modal>
       )}
       {/* <!--NavBar--> */}
@@ -81,14 +83,12 @@ export default function cakes() {
           <div className="flex justify-between mx-auto">
             <div className="flex items-center pl-3">
               {/* <!-- CartMessageIcons --> */}
-
               <div className="flex h-36 w-36 gap-6 items-center">
-                <Link scroll={false} href="/?cart=1">
+                <button onClick={handleCartClick}>
                   <img className="" src="/images/cart.png" />
-                </Link>
+                </button>
               </div>
             </div>
-
             {/* <!--Title Cakes--> */}
             <div className="order-2 flex flex-col text-center pt-3 pr-6 gap-5">
               <p className="text-6xl font-bebasNeue tracking-widest text-weirdPinkColor text-outline">
@@ -100,7 +100,6 @@ export default function cakes() {
                 </p>
               </div>
             </div>
-
             {/* <!--Logo--> */}
             <div className="order-3 pr-3">
               <img
@@ -114,18 +113,23 @@ export default function cakes() {
       </nav>
       {/* <!-- Landing Body Page --> */}
       <div className="bg-white bg-pageBG bg-repeat p-6">
-        <div className="grid grid-cols-3 place-content-evenly gap-5 ">
+        <div className="grid grid-cols-3 place-content-evenly gap-5">
           {/* <!-- CarrotCake --> */}
-          {data?.map((value, index) => (
-            <Cake data={value} key={index}></Cake>
-          ))}
+          {data &&
+            data.map((value, index) => (
+              <Cake
+                data={value}
+                key={index}
+                onClick={() => handleCakeClick(value.id)}
+              />
+            ))}
         </div>
       </div>
     </div>
   );
 }
 
-function Cake({ data }) {
+function Cake({ data, onClick }) {
   const { id, name } = data;
 
   return (
@@ -137,9 +141,9 @@ function Cake({ data }) {
       />
       <div className="p-6 flex flex-col justify-center items-center text-center gap-5">
         <p className="font-bold text-2xl text-slate-900">{name || "Unknown"}</p>
-        <Link scroll={false} href={`/?cakes=${id}`}>
-          <img className="p-3 px-6 pt-2" src="/images/biteme.png" />
-        </Link>
+        <button className="p-3 px-6 pt-2" onClick={onClick}>
+          <img src="/images/biteme.png" />
+        </button>
       </div>
     </div>
   );
