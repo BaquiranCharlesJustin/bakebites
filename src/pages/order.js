@@ -1,7 +1,8 @@
 import Link from "next/link";
 import fetcher from "../lib/fetcher";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function order() {
   let router = useRouter();
@@ -18,6 +19,7 @@ export default function order() {
     minute: "numeric",
     hour12: true,
   });
+
   var userSession;
   try {
     userSession = sessionStorage.getItem("state");
@@ -31,6 +33,7 @@ export default function order() {
 
   const submitData = async (e) => {
     e.preventDefault();
+
     try {
       const userSession = sessionStorage.getItem("state");
       const mode = "pickup";
@@ -50,6 +53,7 @@ export default function order() {
         body: JSON.stringify(body),
       });
       await router.push("/thankyou");
+      sessionStorage.setItem("state", uuidv4());
     } catch (error) {
       console.error(error);
     }
@@ -135,6 +139,12 @@ export default function order() {
                       <Orders data={value} key={index}></Orders>
                     ))}
                   </div>
+                  <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
+                    <p className="text-2xl font-poppins text-outline text-white">
+                      Total Amount:
+                    </p>
+                    <Tots />
+                  </div>
                   <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
                   <div className="flex justify-between gap-x-2 place-items-center px-2 text-xl">
                     <p className="text-2xl font-poppins text-outline text-white">
@@ -204,4 +214,66 @@ function Orders({ data }) {
       </>
     );
   }
+}
+
+function Tots() {
+  var userSession;
+  try {
+    userSession = sessionStorage.getItem("state");
+  } catch (error) {
+    console.log(error);
+  }
+  const {
+    data: cartData,
+    isLoading: cartLoading,
+    isError: cartError,
+  } = fetcher(`api/carts/${userSession}`);
+
+  const calculateTotal = () => {
+    let totalPrice = 0;
+
+    cartData.forEach((product) => {
+      const productType = product.productType;
+      const productId = product.productId;
+      const amount = product.amount;
+
+      if (productType === "cake") {
+        const {
+          data: cakeData,
+          isLoading: cakeLoading,
+          isError: cakeError,
+        } = fetcher(`api/cakes/${productId}`);
+
+        if (!cakeLoading && !cakeError && cakeData) {
+          totalPrice += cakeData.price * amount;
+        }
+      } else if (productType === "cupcake") {
+        const {
+          data: cupcakeData,
+          isLoading: cupcakeLoading,
+          isError: cupcakeError,
+        } = fetcher(`api/cupcakes/${productId}`);
+
+        if (!cupcakeLoading && !cupcakeError && cupcakeData) {
+          totalPrice += cupcakeData.price * amount;
+        }
+      } else if (productType === "bakery") {
+        const {
+          data: bakeryData,
+          isLoading: bakeryLoading,
+          isError: bakeryError,
+        } = fetcher(`api/bakery/${productId}`);
+
+        if (!bakeryLoading && !bakeryError && bakeryData) {
+          totalPrice += bakeryData.price * amount;
+        }
+      }
+    });
+
+    return totalPrice;
+  };
+
+  const total = calculateTotal();
+
+  return <>{total}</>;
 }

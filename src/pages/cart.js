@@ -42,7 +42,7 @@ export default function cartpage() {
           </div>
           <p className="text-3xl font-poppins text-outline">
             Total:
-            <Tots/>
+            <Tots />
           </p>
         </div>
         <div className="hover:bg-red-600 bg-darkBlue border-2 border-black py-2 px-4 flex justify-between text-2xl font-poppins text-outline">
@@ -182,7 +182,17 @@ function Cart({ data1 }) {
 }
 
 function Tots() {
-  const { data: cartData, isLoading: cartLoading, isError: cartError } = fetcher("api/carts");
+  var userSession;
+  try {
+    userSession = sessionStorage.getItem("state");
+  } catch (error) {
+    console.log(error);
+  }
+  const {
+    data: cartData,
+    isLoading: cartLoading,
+    isError: cartError,
+  } = fetcher(`api/carts/${userSession}`);
 
   const calculateTotal = () => {
     let totalPrice = 0;
@@ -193,25 +203,31 @@ function Tots() {
       const amount = product.amount;
 
       if (productType === "cake") {
-        const { data: cakeData, isLoading: cakeLoading, isError: cakeError } = fetcher(
-          `api/cakes/${productId}`
-        );
+        const {
+          data: cakeData,
+          isLoading: cakeLoading,
+          isError: cakeError,
+        } = fetcher(`api/cakes/${productId}`);
 
         if (!cakeLoading && !cakeError && cakeData) {
           totalPrice += cakeData.price * amount;
         }
       } else if (productType === "cupcake") {
-        const { data: cupcakeData, isLoading: cupcakeLoading, isError: cupcakeError } = fetcher(
-          `api/cupcakes/${productId}`
-        );
+        const {
+          data: cupcakeData,
+          isLoading: cupcakeLoading,
+          isError: cupcakeError,
+        } = fetcher(`api/cupcakes/${productId}`);
 
         if (!cupcakeLoading && !cupcakeError && cupcakeData) {
           totalPrice += cupcakeData.price * amount;
         }
       } else if (productType === "bakery") {
-        const { data: bakeryData, isLoading: bakeryLoading, isError: bakeryError } = fetcher(
-          `api/bakery/${productId}`
-        );
+        const {
+          data: bakeryData,
+          isLoading: bakeryLoading,
+          isError: bakeryError,
+        } = fetcher(`api/bakery/${productId}`);
 
         if (!bakeryLoading && !bakeryError && bakeryData) {
           totalPrice += bakeryData.price * amount;
