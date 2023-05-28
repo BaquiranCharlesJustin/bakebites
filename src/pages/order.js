@@ -11,7 +11,6 @@ export default function order() {
   const [contactNumber, setContactNumber] = useState("");
   const [location, setLocation] = useState("");
   const [mode, setMode] = useState("Pickup");
-  const [total, setTotal] = useState(0)
 
   const current = new Date();
   const date = `${current.getDate()}/${
@@ -34,6 +33,52 @@ export default function order() {
   if (isError) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 
+  const calculateTotal = () => {
+    let totalPrice = 0;
+
+    data.forEach((product) => {
+      const productType = product.productType;
+      const productId = product.productId;
+      const amount = product.amount;
+
+      if (productType === "cake") {
+        const {
+          data: cakeData,
+          isLoading: cakeLoading,
+          isError: cakeError,
+        } = fetcher(`api/cakes/${productId}`);
+
+        if (!cakeLoading && !cakeError && cakeData) {
+          totalPrice += cakeData.price * amount;
+        }
+      } else if (productType === "cupcake") {
+        const {
+          data: cupcakeData,
+          isLoading: cupcakeLoading,
+          isError: cupcakeError,
+        } = fetcher(`api/cupcakes/${productId}`);
+
+        if (!cupcakeLoading && !cupcakeError && cupcakeData) {
+          totalPrice += cupcakeData.price * amount;
+        }
+      } else if (productType === "bakery") {
+        const {
+          data: bakeryData,
+          isLoading: bakeryLoading,
+          isError: bakeryError,
+        } = fetcher(`api/bakery/${productId}`);
+
+        if (!bakeryLoading && !bakeryError && bakeryData) {
+          totalPrice += bakeryData.price * amount;
+        }
+      }
+    });
+
+    return totalPrice;
+  };
+
+  const total = calculateTotal();
+
   const submitData = async (e) => {
     e.preventDefault();
 
@@ -48,6 +93,7 @@ export default function order() {
         location,
         mode,
         userSession,
+        total,
       };
 
       await fetch(`api/add_order`, {
@@ -146,7 +192,7 @@ export default function order() {
                     <p className="text-2xl font-poppins text-outline text-white">
                       Total Amount:
                     </p>
-                    <Tots data={data} />
+                    {total}
                   </div>
                   <div className="bg-menuNavBar border-2 rounded-full border-black flex space-x-4"></div>
 
@@ -239,54 +285,4 @@ function Orders({ data }) {
       </>
     );
   }
-}
-
-function Tots({ data }) {
-  const calculateTotal = () => {
-    let totalPrice = 0;
-
-    data.forEach((product) => {
-      const productType = product.productType;
-      const productId = product.productId;
-      const amount = product.amount;
-
-      if (productType === "cake") {
-        const {
-          data: cakeData,
-          isLoading: cakeLoading,
-          isError: cakeError,
-        } = fetcher(`api/cakes/${productId}`);
-
-        if (!cakeLoading && !cakeError && cakeData) {
-          totalPrice += cakeData.price * amount;
-        }
-      } else if (productType === "cupcake") {
-        const {
-          data: cupcakeData,
-          isLoading: cupcakeLoading,
-          isError: cupcakeError,
-        } = fetcher(`api/cupcakes/${productId}`);
-
-        if (!cupcakeLoading && !cupcakeError && cupcakeData) {
-          totalPrice += cupcakeData.price * amount;
-        }
-      } else if (productType === "bakery") {
-        const {
-          data: bakeryData,
-          isLoading: bakeryLoading,
-          isError: bakeryError,
-        } = fetcher(`api/bakery/${productId}`);
-
-        if (!bakeryLoading && !bakeryError && bakeryData) {
-          totalPrice += bakeryData.price * amount;
-        }
-      }
-    });
-
-    return totalPrice;
-  };
-
-  const total = calculateTotal();
-
-  return <>{total}</>;
 }
